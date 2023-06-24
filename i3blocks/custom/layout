@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+color = '#ffffff'
+
+from subprocess import check_output
+output =check_output("setxkbmap -query | grep layout | awk '{print $2}'", shell=True) 
+output = output.decode("utf-8")
+lang = output[:output.index('\n')]
+print(f"<span color='{color}'>{lang}</span>")

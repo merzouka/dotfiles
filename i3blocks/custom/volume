@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+# colors
+icon_color = "#E76F51"
+text_color = "#ffffff"
+
+from subprocess import check_output
+
+output = check_output("amixer sget Master | awk -F'[][]' '/Left:/ { print $2 }'", shell=True)
+output = output.decode("utf-8")
+percentage = int(output[:output.find("%")])
+
+output = check_output("amixer sget Master | awk -F'[][]' '/Left:/ { print $4 }'", shell=True)
+output = output.decode("utf-8")
+state = output[:output.find("\n")]
+icon = ""
+if (state == "on"):
+    if (percentage > 50):
+        icon = "󰕾"
+    elif (percentage > 0):
+        icon = "󰖀"
+    else:
+        icon = "󰖁"
+else:
+    icon = "󰖁"
+text = ""
+if (icon != "󰖁"):
+    text = f"{percentage}%"
+print(f"<span color='{icon_color}'>{icon}  </span> <span color='{text_color}'>{text}</span>")

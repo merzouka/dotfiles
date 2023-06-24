@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Check current layout
+current_layout=$(setxkbmap -query | grep layout | awk '{print $2}')
+
+# Define the layout to switch to
+target_layout=""
+
+# Switch the layout
+if [ "$current_layout" == "us" ]; then
+    target_layout="fr"
+else
+    target_layout="us"
+fi
+
+# Set the new layout
+setxkbmap "$target_layout"
+pkill -SIGRTMIN+11 i3blocks

@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+
+from subprocess import check_output
+
+text_color = "#ffffff"
+icon_color = "#E9C46A"
+
+brightness = round(float(check_output("light -G", shell=True).decode("utf-8")))
+
+print(f"<span color='{icon_color}'>󰃠  </span><span color='{text_color}'>{brightness}%</span>")
+
