@@ -3,6 +3,7 @@ dependecies:
 - rofi
 - lxappearance
 - numlockx
+- maim
 
 fonts:
 - Poppins

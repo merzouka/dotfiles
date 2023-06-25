@@ -1,0 +1,6 @@
+#!/bin/bash
+
+CURRENT_DATE=$(date "+%Y-%m-%d_%H:%M:%S")
+echo $CURRENT_DATE &> ~/tmp
+maim --select ~/Pictures/Screenshots/$CURRENT_DATE.png &
+# import -quality 90 ~/Pictures/Screenshots/$CURRENT_DATE.png &
