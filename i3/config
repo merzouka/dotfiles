@@ -17,6 +17,11 @@ include ~/.config/i3/keybindings.conf
 include ~/.config/i3/commands.conf
 include ~/.config/i3/colors.conf
 
+# remove title bars from windows
+default_border pixel 4
+
+# show borders when more than one window
+smart_borders on
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -31,16 +36,16 @@ tiling_drag modifier titlebar
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:terminal "
-set $ws2 "2:browser 󰈹"
-set $ws3 "3:utility "
-set $ws4 "4:editor 󰘐"
+set $ws1 "1:terminal"
+set $ws2 "2:browser"
+set $ws3 "3:utility" 
+set $ws4 "4:editor" 
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8:files "
-set $ws9 "9:communication 󰍡"
-set $ws10 "10:entertainment 󰗃"
+set $ws8 "8:files"
+set $ws9 "9:communication"
+set $ws10 "10:entertainment"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -72,18 +77,18 @@ mode "resize" {
 
 set $bg #000000
 
-bar {
-    status_command SCRIPT_DIR=~/.config/i3blocks/custom i3blocks
-    separator_symbol " "
-    strip_workspace_numbers on 
-    position top
-    font pango:Poppins Regular 8
-    colors{
-        background $bg
-        # <colorclass>     <border> <background> <text>
-        active_workspace   $bg      $bg          #F4A261
-        focused_workspace  $bg      $bg          #F4A261
-        inactive_workspace $bg      $bg          #808080
-        urgent_workspace   $bg      $bg          #E76F51
-    }
-}
+# bar {
+#     status_command SCRIPT_DIR=~/.config/i3blocks/custom i3blocks
+#     separator_symbol " "
+#     strip_workspace_numbers on 
+#     position top
+#     font pango:Poppins Regular 8
+#     colors{
+#         background $bg
+#         # <colorclass>     <border> <background> <text>
+#         active_workspace   $bg      $bg          #F4A261
+#         focused_workspace  $bg      $bg          #F4A261
+#         inactive_workspace $bg      $bg          #808080
+#         urgent_workspace   $bg      $bg          #E76F51
+#     }
+# }
