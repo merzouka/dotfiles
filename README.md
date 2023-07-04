@@ -4,6 +4,7 @@ dependecies:
 - lxappearance
 - numlockx
 - maim
+- crontab
 
 fonts:
 - Poppins
