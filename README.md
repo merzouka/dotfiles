@@ -1,11 +1,3 @@
-dependecies:
-- arandr
-- rofi
-- lxappearance
-- numlockx
-- maim
-- crontab
-
 fonts:
 - Poppins
 - RobotoMono

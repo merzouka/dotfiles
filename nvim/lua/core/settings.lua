@@ -8,7 +8,7 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftround = true
 vim.opt.expandtab = true
-vim.opt.smartindent = true 
+vim.opt.smartindent = true
 
 
 -- line numbers: --------------------------------------------------------------
@@ -38,4 +38,13 @@ vim.opt.colorcolumn = "100"
 
 -- spell checking ------------------------------------------------------------
 vim.opt.spelllang = 'en_us'
-vim.opt.spell = true
+vim.opt.spell = true 
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        vim.cmd([[
+            hi clear SpellBad
+            hi SpellBad cterm=underline
+            hi SpellBad gui=undercurl
+        ]])
+    end
+})
