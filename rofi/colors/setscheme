@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $HOME/.config/rofi/colors
+
+if [[ ! -e "$HOME/.config/rofi/colors/$1.rasi" || "$1" == "" ]]; then
+    echo "invalid theme"
+    exit 1
+fi
+
+cp "$1.rasi" "scheme.rasi"
+

@@ -1,0 +1,46 @@
+@import                          "shared/colors.rasi"
+@import                          "shared/fonts.rasi"
+
+configuration {
+    modes: [ combi, drun ];
+    combi-modes: [ window, drun, run ];
+}
+
+window {
+    width: 10%;
+    location: south;
+    anchor: south;
+    y-offset: -150;
+}
+
+mainbox{
+    children: [ display ];
+}
+
+display {
+    background-color: var(background);
+    border: 3px;
+    border-color: var(background-alt);
+    location: center;
+    orientation: vertical;
+    children: [ textbox-icon, textbox-percentage ];
+}
+
+textbox-icon {
+    content: "󰕾";
+    text-color: var(foreground);
+    background-color: var(background);
+    horizontal-align: 0.5;
+    size: 80;
+    font: "JetBrainsMono NFP Regular 50";
+}
+
+textbox-percentage {
+    background-color: var(background);
+    text-color: var(foreground);
+    content: "50%";
+    horizontal-align: 0.5;
+    anchor: center;
+    font: var(font);
+    margin: 20 0 0 0;
+}

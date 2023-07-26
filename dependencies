@@ -1,7 +1,0 @@
-- arandr # change monitor settings
-- rofi # lauch menu
-- lxappearance # set gtk theme
-- numlockx # change numlock status from command line
-- maim # take screenshot using command line
-- pipewire # control volume 
-- pulseeffects # control volume
