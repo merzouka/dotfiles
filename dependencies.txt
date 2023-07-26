@@ -1,0 +1,12 @@
+- arandr # change monitor settings
+- rofi # lauch menu
+- lxappearance # set gtk theme
+- numlockx # change numlock status from command line
+- maim # take screenshot using command line
+- pipewire # control volume 
+- mpc # music
+- rofi menus https://gitlab.com/vahnrr/rofi-menus#mpd-menu
+- xclip # clipper
+- rust 
+- cargo
+- eww # see docs for installation

@@ -1,0 +1,7 @@
+set $bg               #b48ead
+set $fg_main          #ebdbb2
+set $fg_second        #fbf1c7
+set $indicator        #ebcb8b
+set $border_focused   #d08770
+set $border_unfocused #ffffff00
+set $red              #bf616a

@@ -1,0 +1,7 @@
+set $bg               #44475a 
+set $fg_main          #f8f8f2
+set $fg_second        #6272a4 
+set $indicator        #6272a4
+set $border_focused   #44475a
+set $border_unfocused #ffffff00
+set $red              #ff5555
