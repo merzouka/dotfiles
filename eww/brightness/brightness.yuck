@@ -1,0 +1,10 @@
+(defwindow brightness
+    :geometry (
+        geometry
+        :x "0%"
+        :y "50%"
+        :width "5%"
+        :height "30%"
+    )
+
+)

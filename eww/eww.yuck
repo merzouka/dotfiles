@@ -1,9 +1,30 @@
-(defvar hello true)
-(defwindow powermenu
-  ;; monitor 0 ;; wayland users may need this
-  :stacking "fg"
-  :windowtype "normal"
-  :wm-ignore true
-  :geometry (geometry :width "10%" :height "10%")
-  (label :text "${hello}"))
+(defwindow brightness
+    :geometry (
+        geometry
+        :width "5%"
+        :height "30%"
+        :anchor "center right"
+    )
+    :stacking "fg"
+    :wmignore true
+    (brightness-slider)
+)
+
+(defpoll brightness_level :interval "100ms" "echo $(( $(brightnessctl g) * 100 / $(brightnessctl m) ))")
+
+(defwidget brightness-slider []
+    (box
+        :spacing 0 
+        :orientation "v"
+        (label :text "")
+        (scale
+            :value brightness_level
+            :flipped true
+            :orientation "v"
+            :onchange "brightnessctl s {}%"
+
+        )
+    ) 
+)
+
 

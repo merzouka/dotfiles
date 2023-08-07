@@ -48,3 +48,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
         ]])
     end
 })
+
+-- auto indent on new line
+vim.cmd("set autoindent")
