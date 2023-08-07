@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [ "$1" == "" ]; then
-    echo "invalid theme"
-    exit 1
-fi
-
-cd $HOME/.config/nvim/lua/core/plugin_config/themes
-sed "s/everforest/$1/g" everforest.lua > "$1.lua"
