@@ -2,7 +2,7 @@ require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
         "bashls", "clangd", "dockerls", "tsserver", "marksman", "intelephense",
-        "pyright", "rust_analyzer", "lua_ls"
+        "pyright", "rust_analyzer", "lua_ls", "codelldb"
     },
 })
 
