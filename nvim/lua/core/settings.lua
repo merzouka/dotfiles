@@ -51,3 +51,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 -- auto indent on new line
 vim.cmd("set autoindent")
+
+-- folds ---------------------------------------------------------------------
+vim.cmd([[ 
+    augroup saveFolds
+        au VimLeave * :mkview
+    augroup END
+]])

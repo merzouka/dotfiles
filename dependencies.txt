@@ -10,3 +10,4 @@
 - rust 
 - cargo
 - eww # see docs for installation
+- ripgrep # telescope project search

@@ -18,6 +18,14 @@ vim.keymap.set("n", "<leader>d", "\"_d")
 vim.keymap.set("v", "<leader>d", "\"_d")
 
 -- quickfix: 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "qj", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "qk", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>k", "<cmd>lprev<CR>zz")
+
+-- load previous buffer info
+vim.keymap.set("n", "<leader>l", "<cmd>:loadview<CR>")
+
+-- toggle case
+vim.keymap.set("v", "~", "~gv")
+

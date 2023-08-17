@@ -18,8 +18,7 @@ return require('packer').startup(function(use)
     use 'nvim-lualine/lualine.nvim'
     use 'nvim-treesitter/nvim-treesitter'
     use {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.0',
+       'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
     use 'theprimeagen/harpoon'
@@ -29,9 +28,21 @@ return require('packer').startup(function(use)
         "williamboman/mason-lspconfig.nvim",
         "neovim/nvim-lspconfig"
     }
-    use "windwp/nvim-ts-autotag"
+
+    use {
+        'nvimdev/lspsaga.nvim', -- better lsp
+        after = 'nvim-lspconfig',
+    }
+
+    -- dashboard 
+    use {
+        'glepnir/dashboard-nvim',
+        event = 'VimEnter',
+    }
+
     use "Townk/vim-autoclose"
     use "christoomey/vim-tmux-navigator"
+
     -- autocompletion
     use "hrsh7th/nvim-cmp"
     use "hrsh7th/cmp-nvim-lsp"
@@ -53,6 +64,13 @@ return require('packer').startup(function(use)
     -- folding
     use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
+    -- debugger
+    use 'mfussenegger/nvim-dap'
+    use 'rcarriga/nvim-dap-ui'
+    use 'theHamsta/nvim-dap-virtual-text'
+
+    -- auto closing tag
+    use 'windwp/nvim-ts-autotag'
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
