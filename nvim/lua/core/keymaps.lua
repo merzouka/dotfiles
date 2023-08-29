@@ -29,3 +29,5 @@ vim.keymap.set("n", "<leader>l", "<cmd>:loadview<CR>")
 -- toggle case
 vim.keymap.set("v", "~", "~gv")
 
+-- search selection
+vim.keymap.set("v", "/", "<Esc>/\\%V")

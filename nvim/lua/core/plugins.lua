@@ -19,58 +19,60 @@ return require('packer').startup(function(use)
     use 'nvim-treesitter/nvim-treesitter'
     use {
        'nvim-telescope/telescope.nvim',
+        tag="0.1.0",
         requires = { {'nvim-lua/plenary.nvim'} }
     }
     use 'theprimeagen/harpoon'
     use 'mbbill/undotree'
+    use "williamboman/mason.nvim"
+
+    -- lsp
     use {
-        "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "neovim/nvim-lspconfig"
-    }
-
-    use {
-        'nvimdev/lspsaga.nvim', -- better lsp
-        after = 'nvim-lspconfig',
-    }
-
-    -- dashboard 
-    use {
-        'glepnir/dashboard-nvim',
-        event = 'VimEnter',
     }
 
     use "Townk/vim-autoclose"
     use "christoomey/vim-tmux-navigator"
 
     -- autocompletion
-    use "hrsh7th/nvim-cmp"
-    use "hrsh7th/cmp-nvim-lsp"
+    use {
+        "hrsh7th/nvim-cmp",
+        "hrsh7th/cmp-nvim-lsp",
+    }
 
     -- snippets
-    use "L3MON4D3/LuaSnip"
-    use "saadparwaiz1/cmp_luasnip"
-    use "rafamadriz/friendly-snippets"
+    use {
+        "L3MON4D3/LuaSnip",
+        "saadparwaiz1/cmp_luasnip",
+        "rafamadriz/friendly-snippets",
+    }
 
     -- color schemes
-    use 'ribru17/bamboo.nvim'
-    use 'neanias/everforest-nvim'
-    use 'AlexvZyl/nordic.nvim'
-    use "rebelot/kanagawa.nvim"
-    use 'navarasu/onedark.nvim'
-    use 'ellisonleao/gruvbox.nvim'
-    use 'Mofiqul/dracula.nvim'
+    use {
+        'ribru17/bamboo.nvim',
+        'neanias/everforest-nvim',
+        'AlexvZyl/nordic.nvim',
+        "rebelot/kanagawa.nvim",
+        'navarasu/onedark.nvim',
+        'ellisonleao/gruvbox.nvim',
+        'Mofiqul/dracula.nvim',
+    }
 
     -- folding
     use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
     -- debugger
-    use 'mfussenegger/nvim-dap'
-    use 'rcarriga/nvim-dap-ui'
-    use 'theHamsta/nvim-dap-virtual-text'
+    use {
+        'mfussenegger/nvim-dap',
+        'rcarriga/nvim-dap-ui',
+        'theHamsta/nvim-dap-virtual-text',
+        'jay-babu/mason-nvim-dap.nvim',
+    }
 
     -- auto closing tag
     use 'windwp/nvim-ts-autotag'
+
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
