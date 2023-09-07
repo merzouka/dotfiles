@@ -1,0 +1,23 @@
+#!/bin/bash
+
+read -r state percentage < <(acpi | sed -E 's/(Battery )[0-9]+: //g' | awk -F ', ' '{print $1, $2}')
+
+discharging_icons=("󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
+charging_icons=("󰢟" "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅")
+
+icons=()
+
+if [ "$state" == "Discharging" ]; then
+    icons=("${discharging_icons[@]}")
+else
+    icons=("${charging_icons[@]}")
+fi
+
+if [[ "$1" == "--icon" ]]; then
+    echo ${icons[$(( $(echo $percentage | grep -E -o "[0-9]+") / 10 ))]}
+elif [[ "$1" == "--percentage" ]]; then
+    echo $percentage
+else
+    echo "invalid parameter."
+    exit 1
+fi

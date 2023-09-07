@@ -1,0 +1,27 @@
+@import '../colors/colors.scss';
+
+.workspace_inactive, .workspace_active, .workspace_focused, .workspace_urgent {
+    background-color: rgba(#ffffff, 0);
+    border: 0px;
+    font-size: 18px;
+    &:hover {
+        color: $white;
+    }
+}
+
+.workspace_active {
+    color: $active;
+}
+
+.workspace_focused {
+    color: $active;
+}
+
+.workspace_inactive {
+    color: $inactive;
+} 
+
+.workspace_urgent {
+    color: $urgent;
+}
+

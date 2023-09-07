@@ -1,0 +1,7 @@
+#!/bin/bash
+
+volume_script="$HOME/.config/eww/bar/scripts/volume"
+config="$HOME/.config/eww/bar"
+
+eww -c $config update volume_percentage=$(bash $volume_script --percentage)
+eww -c $config update volume_icon=$(bash $volume_script --icon)

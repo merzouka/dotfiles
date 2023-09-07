@@ -1,0 +1,27 @@
+@theme "default"
+@import "colors.rasi"
+
+mainbox {
+    border: 2;    
+    border-color: var(active);
+    padding: 3px 6px;
+}
+
+inputbar {
+    background-color: var(background);    
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: var(active);
+}
+
+entry {
+    placeholder: "";    
+}
+
+listview {
+    enabled: false;    
+}
+
+

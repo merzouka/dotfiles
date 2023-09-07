@@ -39,6 +39,9 @@ return require('packer').startup(function(use)
     use {
         "hrsh7th/nvim-cmp",
         "hrsh7th/cmp-nvim-lsp",
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
     }
 
     -- snippets
@@ -73,6 +76,7 @@ return require('packer').startup(function(use)
     -- auto closing tag
     use 'windwp/nvim-ts-autotag'
 
+    use 'norcalli/nvim-colorizer.lua'
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then

@@ -57,4 +57,11 @@ vim.cmd([[
     augroup saveFolds
         au VimLeave * :mkview
     augroup END
+
 ]])
+
+-- color scheme
+vim.cmd("colorscheme gruvbox")
+
+-- display color in css
+vim.cmd("let g:Hexokinase_highlighters = ['virtual']")

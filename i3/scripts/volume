@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ "$1" == "mute" ]; then
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    exit
+fi
+
+max=150
+
+percentage=$(wpctl get-volume @DEFAULT_SINK@ | sed 's/Volume: //g' | awk -F '[][]' '{print $1, $2}')
+
+percentage=$(bc <<< "scale=0; $percentage * 100 / 1")
+
+if [[ $percentage -ge $max && "$(echo $1 | grep -o '+')" == '+' ]]; then
+    exit
+fi
+
+if ! pactl set-sink-volume @DEFAULT_SINK@ $1 2> /dev/null; then
+    echo invalid parameter $1
+    exit 1
+fi

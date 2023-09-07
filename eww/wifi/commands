@@ -1,0 +1,3 @@
+nmcli device wifi -> list available connections, their signal strength, in use connection
+nmcli connection up "name" -> used to connect to a saved connection (should be tested before nmcli device wifi connect)
+nmcli device wifi connect "name" passowrd "passwd" -> connect to wifi

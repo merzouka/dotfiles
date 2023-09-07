@@ -1,0 +1,21 @@
+(defwindow test :stacking "fg" :wm-ignore true
+            :geometry (geometry :anchor "top right" :x "0%" :y "20%" :width "20%" :height "10%")
+                :focusable true
+    (input)
+)
+
+(defvar indices '[0, 1, 2]')
+(defvar selected_items '[true, false, false]')
+
+(defwidget these []
+    (box :orientation "v" :vexpand true 
+        (for entry in '["{"a":"b", "a1":"l"}"]'
+            (label :text "${entry.a}")
+            ; (box :orientation "h"
+            ;     (label :text "${entry.a}")
+            ;     (label :text "${entry.b}")
+            ;     (label :text "${entry.c}")
+            ; )
+        )
+    )
+)

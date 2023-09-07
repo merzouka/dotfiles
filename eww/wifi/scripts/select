@@ -1,0 +1,24 @@
+#!/bin/bash
+
+config="$HOME/.config/eww/wifi"
+
+bash "$config/scripts/refresh"
+
+num_connections=$(( $(nmcli device wifi list | wc -l | awk '{print $1}') - 1 ))
+
+if [ "$1" == "" ]; then
+    eww -c $config update selected="[$(array=( $(printf "false\n%.0s" $(seq 1 $num_connections)) ); IFS=,; echo "${array[*]}")]"
+    exit
+fi
+
+array=()
+for i in $(seq 0 $(( $num_connections - 1))); do
+    if [[ $1 -eq $i ]]; then
+        array+=(true)
+        continue
+    fi
+    array+=(false)
+done
+
+eww -c $config selected="[$(IFS=,; echo "${array[*]}")]"
+

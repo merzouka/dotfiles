@@ -1,0 +1,17 @@
+
+if [ "$1" == "" ]; then
+    echo "[true, false, false]"
+    exit
+fi
+
+array=()
+
+for i in {0..2}; do
+    if [[ $1 -eq i ]]; then
+        array+=(true)
+        continue
+    fi
+    array+=(false)
+done
+
+echo "[$(IFS=','; echo "${array[*]}")]"

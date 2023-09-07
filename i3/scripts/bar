@@ -1,0 +1,7 @@
+#!/bin/bash
+
+config="$HOME/.config/eww/bar"
+
+eww -c $config open bar
+eww -c $config update show_battery_percentage=false
+eww -c $config update show_volume_percentage=false

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+config="$HOME/.config/eww/wifi"
+
+eww -c $config open wifi
+bash "$config/scripts/select"

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+num_workspaces=9
+
+print_workspaces() {
+    open_workspaces=$(i3-msg -t get_workspaces | jq -r '.[].num' | tr -d '\n')
+
+    open_workspaces_info=$(i3-msg -t get_workspaces | jq -r '.[] | "\(.num) \(.focused) \(.urgent)"')
+
+    i=1
+   workspaces_yuck="(box :orientation \"h\" :spacing \"-200\" :class workspaces :vexpand true"
+
+    while read num focused urgent; do
+        while [[ "$i" < "$num" ]]; do 
+            workspaces_yuck+=" (button :halign \"center\" :onclick \"i3-msg workspace number $i\" :class \"workspace_inactive\" \"\")"
+            (( i++ ))
+        done
+        workspaces_yuck+=" (button :halign \"center\" :onclick \"i3-msg workspace number $i\""
+        if [[ "$focused" == "true" && "$urgent" == "false" ]]; then
+            workspaces_yuck+=" :class \"workspace_focused\" \"󰪥\")"
+        elif [ "$urgent" == "true" ]; then
+            workspaces_yuck+=" :class \"workspace_urgent\" \"\")"
+        else 
+            workspaces_yuck+=" :class \"workspace_active\" \"\")"
+        fi
+        (( i++ ))
+    done < <(i3-msg -t get_workspaces | jq -r '.[] | "\(.num) \(.focused) \(.urgent)"')
+
+    while [[ "$i" < "$num_workspaces" ]]; do
+        workspaces_yuck+=" (button :halign \"center\" :onclick \"i3-msg workspace number $i\" :class \"workspace_inactive\" \"\")"
+        (( i++ ))
+    done
+
+    workspaces_yuck="$workspaces_yuck)"
+    echo $workspaces_yuck
+}
+
+print_workspaces
+i3-msg -t subscribe -m '["workspace"]' | while read -r _; do
+    print_workspaces
+done

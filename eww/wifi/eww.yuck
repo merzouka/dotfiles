@@ -1,0 +1,70 @@
+(defwindow wifi :stacking "fg" :wm-ignore true
+    :geometry (geometry :width "28%" :height "50%" :x "-0.5%" :y "20%" :anchor "top right")
+    (box :orientation "v" :space-evenly false
+        (title)
+        (connections)
+    )
+)
+
+(defvar is_wifi_on true)
+
+(defwidget title []
+    (box :orientation "h" :space-evenly false :valign "start" :halign "fill" :hexpand true
+        (box :orientation "h" :halign "start"
+            (button :class "close-window" :onclick "${EWW_CMD} close wifi" "")
+            (label :class "title" :text "WI-FI")
+        )
+        (box :orientation "h" :halign "end" :hexpand true
+            (button :class "refresh" :halign "end" "")
+            (eventbox :class "wifi-toggle"
+                        :onclick "${EWW_CMD} update is_wifi_on=${is_wifi_on ? false : true}; nmcli radio wifi ${is_wifi_on ? "off" : "on"}"
+                (overlay
+                    (label :text "" :class "wifi-on")
+                    (revealer :reveal "${!is_wifi_on}" :transition "slideup" :duration "300ms"
+                        (label :text "" :class "wifi-off")
+                    )
+                )
+            )
+        )
+    )
+)
+
+(defvar indices '[]')
+(defvar ssids '[]')
+(defvar states '[]')
+(defvar selected '[]')
+(defvar signals '[]')
+
+(defwidget connections []
+        (box :orientation "v" :space-evenly false
+            (for i in indices
+                (connection :ssid "${ssids[i]}" :index i :signal "${signals[i]}"
+                            :connected "${states[i]}" :selected "${selected[i]}")
+            ) 
+        )
+)
+
+(defvar status '')
+(defvar processing false)
+
+(defwidget connection [ssid connected selected index signal]
+    (eventbox :class "network" :onclick "~/.config/eww/wifi/scripts/select ${index}" :valign "start"
+        (box :orientation "v" :valign "start" 
+            (box :orientation "h" :hexpand true
+                (label :class "ssid" :text "${ssid}" :halign "start")
+                (label :class "signal" :text "${signal}" :halign "end")
+            )
+            (revealer :reveal "${selected}" :transition "slidedown" :duration "600ms"
+                (overlay 
+                    (label :halign "end" :class "status" :text "${status}" :visible "${processing}")
+                    (button :class "connect" :visible "${!connected}" :halign "end"
+                            :onclick "~/.config/eww/wifi/scripts/connect ${ssid}"
+                    "Connect")
+                    (button :class "disconnect" :visible "${connected}" :halign "end"
+                            :onclick "~/.config/eww/wifi/scripts/disconnect ${ssid}"
+                    "Disconnect")
+                )
+            )
+        )
+    )
+)

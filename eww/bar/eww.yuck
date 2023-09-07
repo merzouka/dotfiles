@@ -1,0 +1,85 @@
+; scripts ------------------------------------------------------
+(defvar scripts_path "~/.config/eww/bar/scripts")
+(defvar workspaces_script "~/.config/eww/bar/scripts/workspaces")
+(defvar battery_script "~/.config/eww/bar/scripts/battery")
+(defvar volume_script "~/.config/eww/bar/scripts/volume")
+(defvar wifi_script "~/.config/eww/bar/scripts/wifi")
+(defvar bluetooth_script "~/.config/eww/bar/scripts/bluetooth")
+; --------------------------------------------------------------
+
+(defwindow bar
+    :geometry (
+        geometry 
+        :x "0" :y "0"
+        :width "90%" :height "5%"
+        :anchor "top center" 
+    )
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    (box
+        :orientation "h"
+        (left)
+        (center)
+        (right)
+    )
+)
+
+(defwidget left []
+    (button :class "left_button" "left")
+)
+
+; center -------------------------------------------------------
+(deflisten workspaces "bash ~/.config/eww/bar/scripts/workspaces")
+
+(defwidget center []
+    (literal :content workspaces)
+)
+; --------------------------------------------------------------
+
+; value vars ---------------------------------------------------
+(defpoll date :interval "5m" `date "+%d/%m/%Y"`)
+(defpoll time :interval "1s" `date "+%I:%M"`)
+(defpoll battery_icon :interval "1min" `~/.config/eww/bar/scripts/battery --icon`)
+(defpoll battery_percentage :interval "1min" `~/.config/eww/bar/scripts/battery --percentage`)
+(defpoll volume_icon :interval "1s" '~/.config/eww/bar/scripts/volume --icon')
+(defpoll volume_percentage :interval "1s" '~/.config/eww/bar/scripts/volume --percentage')
+; --------------------------------------------------------------
+
+; ui vars ------------------------------------------------------
+(defvar show_battery_percentage true)
+(defvar volume_padding_default 8)
+(defvar volume_padding 8)
+(defvar battery_padding_default 6)
+(defvar battery_padding 6)
+; --------------------------------------------------------------
+
+(defwidget right []
+    (box :orientation "h" :vexpand true :space-evenly false :spacing 0 :halign "end"
+        ; the value of show_volume_percentage is replaced in the string before executing the command
+        (eventbox :class "volume" :onclick "echo fuck" :halign "center"
+            (label :class "volume-icon" :tooltip "${volume_percentage}" :valign "center" :text "${volume_icon}")
+        )
+        (button :class "mic" :tooltip "place holder" :halign "center" "󰍬")
+        (button :class "wifi" :tooltip "place holder" :halign "center" "")
+        (button :class "bluetooth" :tooltip "place holder" :halign "center" "󰂯")
+        (eventbox :class "battery" :onclick "${EWW_CMD} update show_battery_percentage=${!show_battery_percentage} battery_padding=${show_battery_percentage ? battery_padding_default : 0}"
+                    :halign "center"
+            (box :orientation "v" :space-evenly false :spacing -5 :valign "center"
+                (label :class "battery-icon" :tooltip "${battery_percentage}" :valign "center"
+                        :style "margin: 0px 0px ${battery_padding} 0px;" :text battery_icon
+                )
+               (revealer :transition "slidedown" :duration "200ms" :reveal show_battery_percentage
+                    (label :class "battery-percentage" :tooltip "place holder" :text battery_percentage)
+                )
+            )
+        )
+        (eventbox :valign "center"
+            (box :orientation "v" :space-evenly false :class "datetime"
+                    :valign "center"
+                (label :text time)
+                (label :text date)
+            )
+        )
+    )
+)
