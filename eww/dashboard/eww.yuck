@@ -1,5 +1,5 @@
 (defwindow dash :stacking "fg" :wm-ignore true 
-    :geometry (geometry :anchor "top left" :x "0%" :y "5.5%" :width "32%" :height "94%"
+    :geometry (geometry :anchor "top right" :x "0%" :y "5.5%" :width "32%" :height "94%"
     )
     (box :class "dashboard" :orientation "v" :vexpand true
         (powermenu)
@@ -9,9 +9,10 @@
 (defwidget powermenu []
     (box :class "powermenu" :orientation "h" :valign "start" :hexpand "true"
             :space-evenly true
-        (button :class "power" "") 
-        (button :class "reboot" "")
-        (button :class "sleep" "󰒲")
-        (button :class "logout" "󰍃")
+        (button :onclick "${EWW_CMD} close dash" :class "power" :halign "center" "") 
+        (button :class "reboot" :halign "center" "")
+        (button :class "sleep" :halign "center" "󰒲")
+        (button :class "logout" :halign "center" "󰍃")
     )
 )
+
