@@ -2,23 +2,26 @@
 
 config="$HOME/.config/eww/wifi"
 
-bash "$config/scripts/refresh"
+num_connections=$(eww -c $config get num_connections)
 
-num_connections=$(( $(nmcli device wifi list | wc -l | awk '{print $1}') - 1 ))
+eww -c $config update can_forget=false
 
 if [ "$1" == "" ]; then
-    eww -c $config update selected="[$(array=( $(printf "false\n%.0s" $(seq 1 $num_connections)) ); IFS=,; echo "${array[*]}")]"
+    eww -c $config update selected_states="[$(array=( $(printf "false\n%.0s" $(seq 1 $num_connections)) ); IFS=,; echo "${array[*]}")]"
     exit
 fi
 
-array=()
+array=($(eww -c $config get selected_states | tr -d '[]' | awk 'BEGIN {RS=","} { print $0 }'))
 for i in $(seq 0 $(( $num_connections - 1))); do
     if [[ $1 -eq $i ]]; then
-        array+=(true)
+        array[$i]=$(if [ "${array[$i]}" == "true" ]; then echo "false"; else echo "true"; fi)
+        if [ "${array[$i]}" == "true" ]; then
+            eww -c $config update can_forget=true
+        fi
         continue
     fi
-    array+=(false)
+    array[$i]=false
 done
 
-eww -c $config selected="[$(IFS=,; echo "${array[*]}")]"
+eww -c $config update selected_states="[$(IFS=,; echo "${array[*]}")]"
 

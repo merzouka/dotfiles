@@ -1,10 +1,11 @@
-.wifi-off{
-    background-color: #ff0;
-    color: #000;
+.network-disconnected{
+    .ssid{
+        color: #ff0;
+    }
 }
 
-.wifi-on {
-    background-color: #fff;
-    color: #ff0;
+.network-connected{
+    .ssid{
+        color: #f0f;
+    }
 }
-

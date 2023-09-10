@@ -1,0 +1,14 @@
+#!/bin/bash
+
+config="$HOME/.config/eww/wifi"
+
+on=$(if [ "$(nmcli radio wifi)" == "enabled" ]; then echo true; else echo false; fi )
+
+nmcli radio wifi $(if [ "$on" == "true" ]; then echo "off"; else echo "on"; fi) 2>&1 >/dev/null
+eww -c $config update is_wifi_on=$(if [ "$on" == "true" ]; then echo "false"; else echo "true"; fi)
+
+if [ "$on" != "true" ]; then
+    eww -c $config update is_refreshing=true
+    sleep 4   
+fi
+bash "$config/scripts/refresh"

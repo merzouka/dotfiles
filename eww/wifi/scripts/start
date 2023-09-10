@@ -2,5 +2,18 @@
 
 config="$HOME/.config/eww/wifi"
 
+eww -c $config update \
+    is_refreshing=false \
+    indices='[]' \
+    ssids='[]' \
+    connected_states='[]' \
+    selected_states='[]' \
+    signals='[]' \
+    num_connections=0 \
+    is_wifi_on=$(if [ "$(nmcli radio wifi)" == "enabled" ]; then echo true; else echo false; fi)\
+    can_forget=false \
+    to_forget='' \
+    processing_status='' \
+    processing=false
 eww -c $config open wifi
-bash "$config/scripts/select"
+bash "$config/scripts/refresh"

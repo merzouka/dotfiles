@@ -1,0 +1,25 @@
+#!/bin/bash
+
+config="$HOME/.config/eww"
+scripts_dir="$HOME/.local/bin"
+
+mkdir -p "$config/source"
+
+git clone https://github.com/elkowar/eww "$config/source"
+
+cd "$config/source"
+
+cargo build --release --no-default-features --features x11
+
+cd "target/release"
+
+chmod +x ./eww
+
+eww kill
+cp ./eww $scripts_dir/eww-copy
+
+cd "$config"
+
+rm -rf "$config/source"
+
+

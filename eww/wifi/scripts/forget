@@ -1,0 +1,19 @@
+#!/bin/bash
+
+config="$HOME/.config/eww/wifi"
+selected_states=($(eww -c $config get selected_states | tr -d "[]" | awk 'BEGIN {RS=","} {print}'))
+ssids=($(eww -c $config get ssids | tr -d "\"[]" | awk 'BEGIN {RS=","} {print}'))
+selected_states=-1
+
+for i in $(seq 0 $(( ${#selected_states[@]} - 1 ))); do
+    if [ "${selected_states[$i]}" == "true" ]; then
+        selected_index=$i
+        break
+    fi
+done
+
+eww -c $config update in_process="\"${ssids[$selected_index]}\""
+
+nmcli connection delete "${ssids[$selected_index]}" 2>&1 >/dev/null
+
+bash "$config/scripts/refresh"

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+config="$HOME/.config/eww/wifi"
+
+if [ "$*" == "" ]; then
+    echo invalid ssid
+    exit 1
+fi
+eww -c $config update processing=false
+
+fail () {
+    eww -c $config update processing_status="Failed "
+    nmcli connection delete "$ssid" 2>&1 >/dev/null
+    sleep "2s"
+    eww -c $config update processing_status="\"\"" processing=false
+    exit 4 
+}
+
+cleanup () {
+    bash "$config/scripts/refresh"
+    eww -c $config update processing=false processing_status=''
+}
+
+eww -c $config update processing=true processing_status="Connecting..."
+
+ssid="$@"
+
+nmcli connection up "$ssid" 2>&1 >/dev/null
+
+case $? in
+    0 )
+        cleanup
+        exit
+    ;;
+    10 )
+    ;;
+    * )
+        fail
+    ;;
+esac
+
+theme="$HOME/.config/eww/wifi/input/theme.rasi"
+
+password=$(rofi -theme $theme -dmenu -p '> ' -password)
+
+nmcli device wifi connect "$ssid" password $password  2>&1 >/dev/null
+
+if [ ! $? -eq 0 ]; then
+    fail
+fi
+
+cleanup

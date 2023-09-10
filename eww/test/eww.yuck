@@ -1,6 +1,6 @@
-(defwindow test :stacking "fg" :wm-ignore true
+(defwindow test :stacking "fg" :wm-ignore true :windowtype "normal"
             :geometry (geometry :anchor "top right" :x "0%" :y "20%" :width "20%" :height "10%")
-                :focusable true
+                :focusable false
     (input)
 )
 

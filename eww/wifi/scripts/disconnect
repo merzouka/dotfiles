@@ -1,0 +1,13 @@
+#!/bin/bash
+
+config="$HOME/.config/eww/wifi"
+ssid="$*"
+
+eww -c $config update processing=true processing_status="Disconnecting..."
+
+nmcli connection down "$ssid" 2>&1 >/dev/null
+
+bash "$config/scripts/refresh"
+
+eww -c $config update processing=false processing_status=''
+
