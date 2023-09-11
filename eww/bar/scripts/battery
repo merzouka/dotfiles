@@ -1,13 +1,14 @@
 #!/bin/bash
 
-read -r state percentage < <(acpi | sed -E 's/(Battery )[0-9]+: //g' | awk -F ', ' '{print $1, $2}')
+state=$(acpi | sed -E 's/(Battery )[0-9]+: //g' | awk -F ',\\s' '{print $1}')
+percentage=$(acpi | sed -E 's/(Battery )[0-9]+: //g' | awk -F ',\\s' '{print $2}')
 
 discharging_icons=("󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
 charging_icons=("󰢟" "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅")
 
 icons=()
 
-if [ "$state" == "Discharging" ]; then
+if [[ "$state" == "Discharging" || "$state" == "Not charging" ]]; then
     icons=("${discharging_icons[@]}")
 else
     icons=("${charging_icons[@]}")
