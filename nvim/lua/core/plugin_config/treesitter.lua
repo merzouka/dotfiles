@@ -1,7 +1,6 @@
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
-    "c", "lua", "rust", "vim", "php", "python", "javascript",
-    "phpdoc"
+    "c", "lua", "vim", "python",
 },
 
   -- install 'ensure_installed' parsers

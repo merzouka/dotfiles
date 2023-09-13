@@ -13,5 +13,4 @@
 - ripgrep # telescope project search
 - pavucontrol #sound control
 - powerprofilectl # control power profiles (balanced performance power-save)
-- cpupower # control power saving features of proc
 - tlp # enable battery charge thresholds

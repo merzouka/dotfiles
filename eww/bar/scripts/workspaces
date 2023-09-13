@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# dependencies i3-msg jq tr
 num_workspaces=9
 
 print_workspaces() {

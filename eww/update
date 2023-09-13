@@ -1,7 +1,17 @@
 #!/bin/bash
 
+package_manager="dnf"
 config="$HOME/.config/eww"
 scripts_dir="$HOME/.local/bin"
+sudo $package_manager install gtk3-devel
+sudo $package_manager install libgdk-3-devel libgtk-3-devel \
+                                pango \
+                                gdk-pixbuf2-devel libgdk_pixbuf-2-devel \
+                                cairo-devel libcairo-devel libcairo-gobject-devel \
+                                glib2-devel libgio-devel libglib-2-devel libgobject-2-devel \
+                                gcclibs-devel libgcc-devel \
+                                glibc-devel 
+                                # gtk-layer-shell #if on wayland
 
 mkdir -p "$config/source"
 
@@ -16,6 +26,9 @@ cd "target/release"
 chmod +x ./eww
 
 eww kill
+if [[ ! -e "$HOME/.local/bin" ]]; then
+    mkdir -p "$HOME/.local/bin"
+fi
 cp ./eww $scripts_dir/eww-copy
 
 cd "$config"

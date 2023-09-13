@@ -1,6 +1,5 @@
 require("mason").setup {
     ensure_installed = {
-        "codelldb",
     }
 }
 

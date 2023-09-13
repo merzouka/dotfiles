@@ -1,8 +1,3 @@
-local servers = {
-    "bashls", "clangd", "dockerls", "tsserver", "marksman", "intelephense",
-    "pyright", "rust_analyzer", "lua_ls"
-}
-
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = servers

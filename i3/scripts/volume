@@ -1,7 +1,8 @@
 #!/bin/bash
+# dependencies: wpctl amixer bc sed awk
 
 if [ "$1" == "mute" ]; then
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    amixer set Master toggle
     exit
 fi
 
@@ -15,7 +16,7 @@ if [[ $percentage -ge $max && "$(echo $1 | grep -o '+')" == '+' ]]; then
     exit
 fi
 
-if ! pactl set-sink-volume @DEFAULT_SINK@ $1 2> /dev/null; then
+if ! amixer set Master $1 2> /dev/null; then
     echo invalid parameter $1
     exit 1
 fi

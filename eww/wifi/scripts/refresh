@@ -1,4 +1,5 @@
 #!/bin/bash
+# dependencies: nmcli awk 
 
 config="$HOME/.config/eww/wifi"
 

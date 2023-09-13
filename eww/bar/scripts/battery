@@ -1,4 +1,5 @@
 #!/bin/bash
+# dependencies: acpi sed awk
 
 state=$(acpi | sed -E 's/(Battery )[0-9]+: //g' | awk -F ',\\s' '{print $1}')
 percentage=$(acpi | sed -E 's/(Battery )[0-9]+: //g' | awk -F ',\\s' '{print $2}')

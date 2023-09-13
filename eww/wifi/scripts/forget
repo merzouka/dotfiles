@@ -1,4 +1,5 @@
 #!/bin/bash
+# depencencies: nmcli awk tr
 
 config="$HOME/.config/eww/wifi"
 selected_states=($(eww -c $config get selected_states | tr -d "[]" | awk 'BEGIN {RS=","} {print}'))

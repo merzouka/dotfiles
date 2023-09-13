@@ -1,4 +1,5 @@
 #!/bin/bash
+# dependencies: nmcli awk sed rofi
 
 config="$HOME/.config/eww/wifi"
 

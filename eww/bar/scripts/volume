@@ -1,4 +1,5 @@
 #!/bin/bash
+# dependenceis: wpctl sed  awk bc
 
 read -r percentage state < <(wpctl get-volume @DEFAULT_SINK@ | sed 's/Volume: //g' | awk -F '[][]' '{print $1, $2}')
 
