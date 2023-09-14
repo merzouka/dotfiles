@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package_manager="dnf"
+package_manager=$(pkgmanager)
 config="$HOME/.config/eww"
 scripts_dir="$HOME/.local/bin"
 sudo $package_manager install gtk3-devel

@@ -13,17 +13,11 @@ local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-    use 'nvim-tree/nvim-tree.lua'
-    use 'nvim-tree/nvim-web-devicons'
-    use 'nvim-lualine/lualine.nvim'
-    use 'nvim-treesitter/nvim-treesitter'
     use {
        'nvim-telescope/telescope.nvim',
         tag="0.1.0",
         requires = { {'nvim-lua/plenary.nvim'} }
     }
-    use 'theprimeagen/harpoon'
-    use 'mbbill/undotree'
     use "williamboman/mason.nvim"
 
     -- lsp
@@ -32,9 +26,11 @@ return require('packer').startup(function(use)
         "neovim/nvim-lspconfig"
     }
 
-    use "Townk/vim-autoclose"
-    use "christoomey/vim-tmux-navigator"
-
+    -- neovim tree
+    use {
+        'nvim-tree/nvim-tree.lua',
+        'nvim-tree/nvim-web-devicons',
+    }
     -- autocompletion
     use {
         "hrsh7th/nvim-cmp",
@@ -73,10 +69,22 @@ return require('packer').startup(function(use)
         'jay-babu/mason-nvim-dap.nvim',
     }
 
-    -- auto closing tag
-    use 'windwp/nvim-ts-autotag'
+    -- editing
+    use {
+        'windwp/nvim-ts-autotag',
+        "kylechui/nvim-surround",
+        "Townk/vim-autoclose",
+        "christoomey/vim-tmux-navigator",
+        'theprimeagen/harpoon',
+        'mbbill/undotree',
+        'nvim-treesitter/nvim-treesitter'
+    }
 
-    use 'norcalli/nvim-colorizer.lua'
+    -- visual
+    use {
+        'norcalli/nvim-colorizer.lua',
+        'nvim-lualine/lualine.nvim',
+    }
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then

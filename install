@@ -1,6 +1,12 @@
 #!/bin/bash
 
-package_manager="dnf"
+if [[ ! -e "$HOME/.local/bin" ]]; then
+    mkdir -p "$HOME/.local/bin"
+fi
+cp ./scripts/pkgmanager $HOME/.local/bin
+
+
+package_manager=$(pkgmanager)
 dotfiles_path="$HOME/dotfiles"
 fonts_dir="$HOME/.fonts"
 
@@ -26,7 +32,7 @@ sudo $package_manager install git gcc vim neovim npm lxappearance numlockx maim 
 sudo $package_manager install i3 i3status i3lock xbacklight feh
 #utils
 sudo $package_manager install pavucontrol blueman tlp xrandr arandr rofi tmux \
-                        alacritty
+                        alacritty polybar
 # pavucontrol: sound control
 # blueman: gui bluetooth manager
 # tlp: battery management
@@ -50,6 +56,8 @@ ln -s "$dotfiles_path/alacritty" .
 # ln -s "$dotfiles_path/rofi" .
 ln -s "$dotfiles_path/tmux" .
 ln -s "$dotfiles_path/picom" .
+ln -s "$dotfiles_path/wired" .
+ln -s "$dotfiles_path/polybar" .
 
 # source tmux config
 tmux source "$HOME/.config/tmux/tmux.conf"
@@ -57,6 +65,7 @@ tmux source "$HOME/.config/tmux/tmux.conf"
 
 # install eww
 ./eww/update
+mv $HOME/.local/bin/eww-copy $HOME/.local/bin/eww
 
 # installing fonts
 mkdir -p "$fonts_dir/"
@@ -66,4 +75,8 @@ fc-cache
 # tlp config
 sudo mv tlp/tlp.conf /etc/tlp.conf
 
-cp ./wallpapers ~/Pictures/wallpapers
+# wallpapers
+cp -r ./wallpapers $HOME/Pictures/wallpapers
+
+# make 'themechange' command available system wide
+cp ./scripts/themechange $HOME/.local/bin

@@ -1,8 +1,18 @@
+(include "../common/vars.yuck")
+
+(defvar hotspot_script "~/.config/eww/bar/scripts/hotspot")
+(defvar power_profile_script "~/.config/bar/scripts/power_profile")
+(defvar volume_script "~/.config/bar/scripts/volume")
+
 (defwindow dash :stacking "fg" :wm-ignore true 
     :geometry (geometry :anchor "top right" :x "0%" :y "5.5%" :width "32%" :height "94%"
     )
-    (box :class "dashboard" :orientation "v" :vexpand true
+    (box :class "dashboard" :orientation "v" :vexpand true :space-evenly false
         (powermenu)
+        (box :orientation "h" :hexpand true :valign "start" :class "hello" :space-evenly false
+            (stats)
+            (settings)
+        )
     )
 )
 
@@ -16,3 +26,60 @@
     )
 )
 
+(defwidget stats []
+    (box :class "stats" :orientation "v" :valign "start" :space-evenly true
+            :halign "start"
+        (stat :class "battery" :icon "󰁹" :value 50)
+        (stat :class "disk" :icon "" :value 50)
+    )
+)
+
+(defwidget stat [class value icon ?onclick]
+    (eventbox :class "${class}" :onclick "${onclick == "" ? "" : onclick}"
+        (overlay
+            (button :class "${class}-icon" :halign "center" "${icon}")
+            (circular-progress :class "${class}-progress" :start-at 75 :value "${value}" :clockwise true)
+        )
+    )
+)
+
+(defvar power-profile '')
+
+(defwidget settings []
+    (box :class "settings" :orientation "v" :hexpand true 
+        (box :orientation "h" :hexpand true
+            (button :class "setting-${wifi ? 'active' : 'inactive'}" 
+                    :onclick "nmcli radio wifi ${wifi ? "off" : "on"}; ${EWW_CMD} update wifi=${!wifi} &" "") 
+            (button :class "setting-${bluetooth ? 'active' : 'inactive'}" 
+                    :onclick "rfkill toggle bluetooth; ${EWW_CMD} update bluetooth=${!bluetooth} &" "󰂯")
+            (button :class "setting-${hotspot ? 'active' : 'inactive'}"
+                    :onclick "${hotspot_script} &" "󰀃")
+        )
+        (box :orientation "h" :hexpand true
+            (button :class "setting-${airplane ? 'active' : 'inactive'}"
+                :onclick "nmcli radio all ${airplane ? 'off' : 'on'}; ${EWW_CMD} update airplane=${!airplane} &" "󰀝")
+            (button :class "setting-${disable_notification ? 'active' : 'inactive'}"
+                    :onclick "gsettings set org.gnome.desktop.notifications show-banners ${disable_notification ? 'false' : 'true'} &" "󰂛")
+            (button :class "power-profile"
+                    :onclick "${power_profile_script} &" "${power_profile}")
+        )
+    )
+)
+
+(defwidget sliders []
+    (box :orientation "v" :space-evenly true
+        (slider :value "${volume}" :max "151" :onchange "${volume_script}" 
+                :onclick "amixer set Master toggle")
+        (slider :value "${mic}" :max "101" :onchange "${mic_script}"
+                :onclick "")
+    )
+)
+
+(defwidget slider [value max onchange onclick]
+    (box :class "slider" :orientation "h" :space-evenly false
+        (button :class "slider-icon" :halign "start"
+                :onclick "${onclick}")
+        (scale :class "slider-progress" :flipped false :value "${value}" :max "${max}"
+                :onchange "${onchange}")
+    )
+)

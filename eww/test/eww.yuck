@@ -1,8 +1,10 @@
 (defwindow test :stacking "fg" :wm-ignore true :windowtype "normal"
             :geometry (geometry :anchor "top right" :x "0%" :y "20%" :width "20%" :height "10%")
                 :focusable false
-    (input)
+    (scale :value "${v}" :draw-value true :max 120 :onchange "${EWW_CMD} update v={}")
 )
+
+(defvar v 50)
 
 (defvar indices '[0, 1, 2]')
 (defvar selected_items '[true, false, false]')

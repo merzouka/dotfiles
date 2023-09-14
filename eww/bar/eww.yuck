@@ -75,7 +75,7 @@
             )
         )
         (eventbox :valign "center"
-            (box :orientation "v" :space-evenly false :class "datetime"
+            (box :orientation "v" :space-evenly false :class "datetime" :spacing -4
                     :valign "center"
                 (label :text time)
                 (label :text date)
