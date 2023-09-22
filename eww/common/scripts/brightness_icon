@@ -1,0 +1,20 @@
+#!/bin/bash
+
+config="$1"
+if [[ ! -e $config ]]; then
+    echo "invalid path"
+    exit 1
+fi
+
+script="$HOME/.config/eww/common/scripts/brightness"
+
+update () {
+    sleep 0.1
+    eww -c $1 update brightness_icon=$(bash "$script" --icon)
+}
+
+update $config
+
+acpi_listen | stdbuf -oL grep -E 'BRT(UP|DN)' | while read -r _; do
+    update $config
+done

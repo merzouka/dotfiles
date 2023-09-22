@@ -1,0 +1,29 @@
+#!/bin/bash
+# dependenceis: wpctl sed  awk bc
+
+read -r percentage state < <(wpctl get-volume @DEFAULT_SOURCE@ | sed 's/Volume: //g' | awk -F '[][]' '{print $1, $2}')
+
+percentage="$(bc <<< "scale=0; $percentage * 100 / 1")%"
+
+if [ "$1" == "--percentage" ]; then
+    if [ "$state" == "MUTED" ]; then
+        percentage="mute"
+    fi
+    echo $percentage
+    exit
+fi
+
+icon=""
+
+if [ "$state" == "MUTED" ]; then
+    icon="󰍭" 
+else
+    icon="󰍬"
+fi
+
+if [ "$1" == "--icon" ]; then
+    echo $icon
+else 
+    echo "invalid argument"
+    exit 1
+fi

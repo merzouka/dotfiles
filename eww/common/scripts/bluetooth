@@ -1,0 +1,17 @@
+#!/bin/bash
+
+config="$1"
+if [[ ! -e "$config" ]]; then
+    echo "invalid path"
+    exit
+fi
+
+update() {
+    read -r state < <(rfkill list bluetooth | grep 'Soft blocked' | awk -F ': ' '{print $2}')
+    state=$(if [ "$state" == "yes" ]; then echo "false"; else echo "true"; fi)
+    eww -c $1 update bluetooth=$state
+}
+
+rfkill event | stdbuf -oL grep 'idx 3' | while read -r _; do
+    update $config
+done

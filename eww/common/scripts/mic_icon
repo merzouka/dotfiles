@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mic="$HOME/.config/eww/common/scripts/mic"
+config="$1"
+if [[ ! -e "$config" ]]; then
+    echo "invalid path"
+    exit 1
+fi
+
+update () {
+    eww -c $1 update mic_icon=$("$mic" --icon) &
+}
+update $config
+stdbuf -oL amixer events | stdbuf -oL grep -E '(Capture)+' | stdbuf -oL grep -v -E '(event add)' | while read -r _; do
+    update $config
+done
+
+

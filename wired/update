@@ -1,0 +1,12 @@
+#!/bin/bash
+# dependencies: git
+
+config="$HOME/.config/wired"
+bindir="$HOME/.local/bin"
+git clone https://github.com/Toqozz/wired-notify.git "$config/source"
+cd source
+chmod +x installer.sh
+sudo ./installer.sh
+
+sudo mv "$config/source/target/release/wired" "$bindir/wired-copy"
+sudo rm -rf "$config/source"

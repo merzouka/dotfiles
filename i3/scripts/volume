@@ -4,25 +4,15 @@
 mute=$(wpctl get-volume @DEFAULT_SINK@ | sed 's/Volume: //g' | awk -F '[][]' '{print $2}')
 
 if [ "$1" == "mute" ]; then
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    amixer set Master toggle 1> /dev/null
     exit
 fi
 
 if [ "$mute" == "MUTED" ]; then
-    exit
+    amixer set Master toggle > /dev/null
 fi
 
-max=150
-
-percentage=$(wpctl get-volume @DEFAULT_SINK@ | sed 's/Volume: //g' | awk -F '[][]' '{print $1}')
-
-percentage=$(bc <<< "scale=0; $percentage * 100 / 1")
-
-if [[ $percentage -ge $max && "$(echo $1 | grep -o '+')" == '+' ]]; then
-    exit
-fi
-
-if ! pactl set-sink-volume @DEFAULT_SINK@ $1 2> /dev/null; then
+if ! amixer set Master $1 1> /dev/null; then
     echo invalid parameter $1
     exit 1
 fi

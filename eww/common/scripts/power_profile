@@ -1,0 +1,7 @@
+#!/bin/bash
+
+profile=$(powerprofilesctl get)
+declare -A profile_icon=([performance]="󰓅" [balanced]="󰗑" [power-saver]="󰌪")
+echo ${profile_icon[$profile]}
+
+

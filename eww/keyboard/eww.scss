@@ -1,0 +1,29 @@
+@import '../colors/colors.scss';
+
+.layout-active, .layout-inactive{
+    padding: 4px 50px 4px 50px;
+    margin: 2px;
+    border-radius: 0;
+    font-family: "Rubik";
+    &:hover {
+        color: $white;
+    }
+}
+
+.layout-active {
+    border-width: 0px 0px 0px 3px;
+    border-color: $active;
+    color: $active;
+    font-weight: bold;
+}
+
+.layout-inactive {
+    border-width: 0px 0px 0px 2px;
+    border-color: $inactive;
+}
+
+.layouts {
+    background-color: $bg;
+    padding: 6px;
+}
+

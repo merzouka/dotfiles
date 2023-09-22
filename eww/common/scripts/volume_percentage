@@ -1,0 +1,17 @@
+#!/bin/bash
+
+volume="$HOME/.config/eww/common/scripts/volume"
+config="$1"
+if [[ ! -e "$config" ]]; then
+    echo "invalid path"
+    exit 1
+fi
+
+update () {
+    eww -c $1 update volume_percentage=$("$volume" --percentage) &
+}
+update $config
+stdbuf -oL amixer events | stdbuf -oL grep -E '(Master)+' | stdbuf -oL grep -v -E '(event add)' | while read -r _; do
+    update $config
+done
+

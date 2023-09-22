@@ -1,0 +1,23 @@
+#!/bin/bash
+
+battery="$HOME/.config/eww/common/scripts/battery"
+config="$1"
+if [[ ! -e "$config" ]]; then
+    echo "invalid path"
+    exit 1
+fi
+
+percentage=""
+update () {
+    percentage=$("$battery" --percentage)
+    eww -c $1 update battery_percentage=$percentage
+}
+
+update $config
+stdbuf -oL upower --monitor | stdbuf -oL awk -F '[][]' '{print $2}' | stdbuf -oL awk -F '.' '{print $1}' | while read -r fresh; do
+    if [[ "$fresh" != "$old" && "$percentage" != "$("$battery" --percentage)" ]]; then
+        old=$fresh
+        update $config
+    fi
+done
+

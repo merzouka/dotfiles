@@ -1,0 +1,13 @@
+event add: numid=4,iface=MIXER,name='Master Playback Switch'
+event add: numid=3,iface=MIXER,name='Master Playback Volume'
+event add: numid=2,iface=MIXER,name='Capture Switch'
+event add: numid=1,iface=MIXER,name='Capture Volume'
+Ready to listen...
+Poll ok: 1
+event value: numid=1,iface=MIXER,name='Capture Volume'
+event value: numid=2,iface=MIXER,name='Capture Switch'
+event value: numid=3,iface=MIXER,name='Master Playback Volume'
+Poll ok: 1
+event value: numid=3,iface=MIXER,name='Master Playback Volume'
+Poll ok: 1
+event value: numid=3,iface=MIXER,name='Master Playback Volume'

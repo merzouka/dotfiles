@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ "$1" != "--percentage" && "$1" != "--icon" ]]; then
+    echo "invalid parameter"
+    exit 1
+fi
+
+percentage=$(( $(brightnessctl g) * 100 / $(brightnessctl m) ))
+
+if [ "$1" == "--percentage" ]; then
+    echo "$percentage%"
+    exit
+fi
+
+if [[ $percentage -le 25 ]]; then
+    icon="󰃞"
+elif [[ $percentage -lt 75 ]]; then
+    icon="󰃟"
+else 
+    icon="󰃠"
+fi
+
+echo $icon

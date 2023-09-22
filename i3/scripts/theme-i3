@@ -1,0 +1,8 @@
+#!/bin/bash
+
+scripts="$HOME/.config/i3/scripts/theme_scripts"
+source "$scripts/add"
+source "$scripts/set"
+source "$scripts/remove"
+
+

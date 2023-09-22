@@ -1,0 +1,38 @@
+#!/bin/bash
+
+
+# validate options
+valid_options=("--config" "--scripts")
+i=0 
+input_options=("$(echo $@ | awk 'BEGIN {RS="\\s+"; FS="="} {print $1}')")
+for param in ${input_options}; do
+    if [[ $(grep -E "($param)" < <(echo ${valid_options[@]}) > /dev/null; echo $?) -ne 0 ]]; then
+        echo "invalid option: $param"
+        exit 1
+    fi
+done
+
+config=$(echo $@ | tr ' ' '\n' | grep '\--config' | awk -F '=' '{print $2}' | sed "s/\~/$(echo $HOME | sed 's/\//\\\//g')/g")
+scripts=("$(echo $@ | tr ' ' '\n' | grep '\--scripts' | awk -F '=' '{print $2}' | awk 'BEGIN { RS="," } {print}')")
+
+# validate parameters
+if [[ ! -e "$config" ]]; then
+    echo "invalid path"
+    exit 1
+fi
+if [ "${scripts[@]}" == "" ]; then
+    echo "specify scripts to run using '--scripts='"
+    exit
+fi
+scripts_path="$HOME/.config/eww/common/scripts"
+
+cd "$scripts_path"
+for expr in ${scripts[@]}; do
+    echo "$expr" | while read -r script; do
+        if [ "$script" == "start-daemons" ]; then
+            continue
+        fi
+        bash "$scripts_path/$script" $config & > /dev/null
+    done
+done
+

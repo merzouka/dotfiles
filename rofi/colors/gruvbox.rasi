@@ -1,0 +1,14 @@
+* {
+    bg: #282828;
+    fg: #ebdbb2;
+    urgent: #cc241d;
+    inactive:#928374; 
+    active: #fe8019;
+    black: #1d2021;
+    white: #fbf1c7;
+    red: #fb4934; 
+    green: #79740e;
+    blue: #458588;
+    cyan: #83a598;
+    magenta: #b16286;
+}

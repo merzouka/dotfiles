@@ -1,0 +1,21 @@
+#!/bin/bash
+
+config="$1"
+if [[ ! -e $config ]]; then
+    echo invalid path
+    exit 1
+fi
+
+declare -A state_type=([full]="wifi" [limited]="hotspot" [none]="off")
+update () {
+    sleep 0.7
+    state=$(nmcli networking connectivity check)
+    eww -c $1 update connection_type=${state_type["$state"]}
+}
+
+update $config
+nmcli device monitor | stdbuf -oL grep -E '^w.+(connected|disconnected|unavailable)$' \
+    | stdbuf -oL awk -F ': ' '{print $2}' | while read -r state; do
+    update $config
+done
+

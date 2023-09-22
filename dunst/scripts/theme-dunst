@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# themes=($(theme -l))
+themes=("everforest" "dracula" "catppuccin" "gruvbox")
+match=false
+for theme in ${themes[@]}; do
+    if [ "$theme" == "$1" ]; then
+        match=true
+        break
+    fi
+done
+if [ "$match" == "false" ]; then
+    echo "invalid theme: $1"
+    exit 1
+fi
+config="$HOME/.config/dunst"
+colors="$config/colors"
+
+# set up palette
+cat "$colors/$1.ini" > "$colors/palette.ini"
+
+# substitution
+cat "$config/colors.ini" > "$config/out"
+cat "$colors/palette.ini" | awk -F ' = ' '{print $1, $2}' | while read -r key value; do
+    cat "$config/out" | sed "s/\$$key/$value/g" > "$config/tmp"
+    cat "$config/tmp" > "$config/out"
+done
+
+# cleanup
+rm "$config/tmp"
+
+# updating config
+cat "$config/settings.ini" "$config/out" > dunstrc
+rm "$config/out"
+

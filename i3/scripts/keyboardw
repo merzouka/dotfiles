@@ -1,0 +1,28 @@
+#!/bin/bash
+
+timeout=1
+folder="$HOME/.config/i3/scripts/files"
+if [[ ! -e $folder ]]; then
+    mkdir $folder
+fi
+status="$folder/keyboard.log"
+if [[ ! -e $status ]]; then
+    touch $status
+fi
+if read -r _ < $status; then
+    exit
+fi
+echo "open" > $status
+
+config="$HOME/.config/eww/keyboard"
+eww -c $config open keyboard
+
+log="$HOME/.config/i3/scripts/files/layout.log"
+stdbuf -oL tail -f "$log" | while read -t $timeout -r _; do
+    :
+done
+
+eww -c $config close keyboard
+> $status
+> $log
+

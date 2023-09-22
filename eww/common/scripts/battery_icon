@@ -1,0 +1,24 @@
+#!/bin/bash
+
+battery="$HOME/.config/eww/common/scripts/battery"
+config="$1"
+if [[ ! -e "$config" ]]; then
+    echo "invalid path"
+    exit 1
+fi
+
+icon=""
+update () {
+    icon=$("$battery" --icon)
+    eww -c $1 update battery_icon=$icon
+}
+
+update $config
+stdbuf -oL upower --monitor | stdbuf -oL awk -F '[][]' '{print $2}' | stdbuf -oL awk -F '.' '{print $1}' | while read -r fresh; do
+    if [[ "$fresh" != "$old" && "$icon" != "$("$battery" --icon)" ]]; then
+        old=$fresh
+        update $config
+    fi
+done
+
+

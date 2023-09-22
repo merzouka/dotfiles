@@ -1,0 +1,17 @@
+(defwindow keyboard :class "window" :stacking "fg" :wm-ignore true
+                    :geometry (geometry :anchor "top right" :x "-3.5%" :y "5.8%" :width "5%" :height "6%")
+    (box :class "layouts" :orientation "v" :space-evenly false :valign "start" :vexpand true
+        (for lay in layouts
+            (layout :value lay :active "${selected == lay ? true : false}")
+        )
+    )
+)
+
+(defvar selected "fr")
+(defvar layouts '["fr" ,"us" ,"ar"]')
+
+(defwidget layout [value active]
+    (button :class "layout-${active ? 'active' : 'inactive'}"
+            :onclick "swaplayout ${value}" value)
+)
+

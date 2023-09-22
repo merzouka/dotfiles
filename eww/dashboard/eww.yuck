@@ -1,4 +1,4 @@
-(include "../common/vars.yuck")
+(include "../common/eww.yuck")
 
 (defvar hotspot_script "~/.config/eww/bar/scripts/hotspot")
 (defvar power_profile_script "~/.config/bar/scripts/power_profile")

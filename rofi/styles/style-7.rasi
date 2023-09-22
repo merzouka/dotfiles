@@ -1,0 +1,177 @@
+/**
+ *
+ * Author : Aditya Shakya (adi1090x)
+ * Github : @adi1090x
+ * 
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
+/*****----- Configuration -----*****/
+configuration {
+	modi:                       "drun";
+    show-icons:                 true;
+    display-drun:               "";
+	drun-display-format:        "{name}";
+}
+
+/*****----- Palette -----*****/
+@import "colors/palette.rasi"
+
+/*****----- Main Window -----*****/
+window {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       750px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               12px;
+    border-color:                var(active);
+    background-color:            var(background);
+    cursor:                      "default";
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px 0px 0px 0px;
+    border-color:                var(active);
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview" ];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     15px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                var(active);
+    background-color:            var(black);
+    text-color:                  var(white);
+    children:                    [ "prompt", "entry" ];
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
+    content:                     "";
+    font:                        "JetBrainsMono NFP 12";
+    padding:                     0px 0px 4px 0px;
+    margin:                      0px 6px 0px 0px;
+}
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "::";
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+entry {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  var(inactive);
+    cursor:                      text;
+    placeholder:                 "Search...";
+    placeholder-color:           inherit;
+    font:                        "Rubik 15";
+}
+
+/*****----- Listview -----*****/
+listview {
+    enabled:                     true;
+    columns:                     5;
+    lines:                       4;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     5px;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                var(active);
+    background-color:            transparent;
+    text-color:                  var(white);
+    cursor:                      "default";
+}
+scrollbar {
+    handle-width:                5px ;
+    handle-color:                var(active);
+    border-radius:               0px;
+    background-color:            var(inactive);
+}
+
+/*****----- Elements -----*****/
+element {
+    enabled:                     true;
+    spacing:                     6px;
+    margin:                      0px;
+    padding:                     16px 0px;
+    border:                      0px solid;
+    border-radius:               8px;
+    border-color:                var(active);
+    background-color:            transparent;
+    text-color:                  var(foreground);
+    orientation:                 vertical;
+    cursor:                      pointer;
+}
+element normal.normal {
+    background-color:            var(background);
+    text-color:                  var(foreground);
+}
+element selected.normal {
+    background-color:            var(active);
+    text-color:                  var(black);
+}
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        46px;
+    cursor:                      inherit;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    font:                        "Libre Franklin 11"; 
+}
+
+/*****----- Message -----*****/
+error-message {
+    padding:                     15px;
+    border:                      2px solid;
+    border-radius:               12px;
+    border-color:                var(urgent);
+    background-color:            var(background);
+    text-color:                  var(foreground);
+}
+textbox {
+    background-color:            var(background);
+    text-color:                  var(foreground);
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    highlight:                   none;
+}

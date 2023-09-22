@@ -1,10 +1,10 @@
 @import '../colors/colors.scss';
 
-.wifi {
+.connection {
     margin: 0px 3px 0px 0px;
 }
 
-.bluetooth, .wifi, .mic, .volume, .battery {
+.bluetooth, .connection, .mic, .volume, .battery {
     font-family: "JetBrainsMono";
     font-size: 16px;
     color: $active;
@@ -27,7 +27,7 @@
     }
 }
 
-.bluetooth, .wifi, .mic, .volume {
+.bluetooth, .connection, .mic, .volume {
     background-color: rgba(#ffffff, 0);
     border: 0px;
 }

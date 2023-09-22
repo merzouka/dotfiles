@@ -1,3 +1,5 @@
+(include "../common/eww.yuck")
+
 ; scripts ------------------------------------------------------
 (defvar scripts_path "~/.config/eww/bar/scripts")
 (defvar workspaces_script "~/.config/eww/bar/scripts/workspaces")
@@ -40,10 +42,7 @@
 ; value vars ---------------------------------------------------
 (defpoll date :interval "5m" `date "+%d/%m/%Y"`)
 (defpoll time :interval "1s" `date "+%I:%M"`)
-(defpoll battery_icon :interval "1min" `~/.config/eww/bar/scripts/battery --icon`)
-(defpoll battery_percentage :interval "1min" `~/.config/eww/bar/scripts/battery --percentage`)
-(defpoll volume_icon :interval "1s" '~/.config/eww/bar/scripts/volume --icon')
-(defpoll volume_percentage :interval "1s" '~/.config/eww/bar/scripts/volume --percentage')
+(defvar layout "fr")
 ; --------------------------------------------------------------
 
 ; ui vars ------------------------------------------------------
@@ -57,25 +56,33 @@
 (defwidget right []
     (box :orientation "h" :vexpand true :space-evenly false :spacing 0 :halign "end"
         ; the value of show_volume_percentage is replaced in the string before executing the command
-        (eventbox :class "volume" :onclick "echo fuck" :halign "center"
-            (label :class "volume-icon" :tooltip "${volume_percentage}" :valign "center" :text "${volume_icon}")
+        (box :class "adjustables" :orientation "h" :space-evenly false :spacing 0
+            (button :class "brightness" :tooltip "${brightness_percentage}" :valign "center" "${brightness_icon}")
+            (button :class "volume" :tooltip "${volume_percentage}" :valign "center" "${volume_icon}")
+            (button :class "mic" :tooltip "${mic_percentage}" :halign "center" "${mic_icon}")
         )
-        (button :class "mic" :tooltip "place holder" :halign "center" "󰍬")
-        (button :class "wifi" :tooltip "place holder" :halign "center" "")
-        (button :class "bluetooth" :tooltip "place holder" :halign "center" "󰂯")
-        (eventbox :class "battery" :onclick "${EWW_CMD} update show_battery_percentage=${!show_battery_percentage} battery_padding=${show_battery_percentage ? battery_padding_default : 0}"
-                    :halign "center"
-            (box :orientation "v" :space-evenly false :spacing -5 :valign "center"
-                (label :class "battery-icon" :tooltip "${battery_percentage}" :valign "center"
-                        :style "margin: 0px 0px ${battery_padding} 0px;" :text battery_icon
-                )
-               (revealer :transition "slidedown" :duration "200ms" :reveal show_battery_percentage
-                    (label :class "battery-percentage" :tooltip "place holder" :text battery_percentage)
+        (box :class "network" :orientation "h" :space-evenly false :spacing 0
+            (button :class "connection" :tooltip "place holder" :halign "center"
+                    :active "${connection_type == 'wifi' ? true : false}"
+            "${connection_icon}")
+            (button :class "bluetooth" :halign "center" "${bluetooth ? '󰂯' : '󰂲'}")
+        )
+        (box :class "general" :space-evenly false :spacing 0
+            (eventbox :class "battery" :onclick "${EWW_CMD} update show_battery_percentage=${!show_battery_percentage} battery_padding=${show_battery_percentage ? battery_padding_default : 0}"
+                        :halign "center"
+                (box :orientation "v" :space-evenly false :spacing -5 :valign "center"
+                    (label :class "battery-icon" :tooltip "${battery_percentage}" :valign "center"
+                            :style "margin: 0px 0px ${battery_padding} 0px;" :text battery_icon
+                    )
+                   (revealer :transition "slidedon" :duration "200ms" :reveal show_battery_percentage
+                        (label :class "battery-percentage" :tooltip "place holder" :text battery_percentage)
+                    )
                 )
             )
+            (button :class "layout" layout)
         )
         (eventbox :valign "center"
-            (box :orientation "v" :space-evenly false :class "datetime" :spacing -4
+            (box :class "datetime" :orientation "v" :space-evenly false :spacing -4
                     :valign "center"
                 (label :text time)
                 (label :text date)

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+config=$1
+if [[ ! -e $config ]]; then
+    echo "invalid path"
+    exit 1
+fi
+
+update () {
+    sleep 0.5
+    read -r _ wifi _ wwan < <(nmcli radio all | grep -E '(enabled|disabled|missing)')
+    if [[ "$wifi" == "$wwan" && "$wifi" == "disabled" ]]; then
+        airplane="true"
+    else 
+        airplane="false"
+    fi
+    eww -c $1 update airplane=$airplane
+}
+
+update $config
+nmcli device monitor | stdbuf -oL grep -E '^w.+(disconnected|unavailable)' | while read -r _; do
+    update $config
+done

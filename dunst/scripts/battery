@@ -1,0 +1,18 @@
+#!/bin/bash
+# dependencies: upower awk stdbuf read acpi
+low=20
+config="$HOME/.config/dunst"
+
+state=$(acpi | sed 's/Battery 0: //g' | awk -F ', ' '{print $1}')
+percentage=$(acpi | sed 's/Battery 0: //g' | awk -F ', ' '{print $2}' | grep -oE '[0-9]+')
+echo $state
+echo $percentage 
+exit
+while true; do
+    state=$(acpi | sed 's/Battery 0: //g' | awk -F ', ' '{print $1}')
+    percentage=$(acpi | sed 's/Battery 0: //g' | awk -F ', ' '{print $2}' | grep -oE '[0-9]+')
+    if [[ "$state" == "Discharging" && $percentage -le $low ]]; then
+
+    fi
+    sleep 2m
+done

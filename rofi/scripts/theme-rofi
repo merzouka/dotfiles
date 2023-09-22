@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# themes=($(theme -l))
+themes=("everforest" "dracula" "catppuccin" "gruvbox")
+match=false
+for theme in ${themes[@]}; do
+    if [ "$theme" == "$1" ]; then
+        match=true
+        break
+    fi
+done
+if [ "$match" == "false" ]; then
+    echo "invalid theme: $1"
+    exit 1
+fi
+colors="$HOME/.config/rofi/colors"
+
+echo "@import \"$1.rasi\"" > "$colors/palette.rasi"
