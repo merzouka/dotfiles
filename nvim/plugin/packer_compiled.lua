@@ -189,6 +189,11 @@ _G.packer_plugins = {
     path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
     url = "https://github.com/theHamsta/nvim-dap-virtual-text"
   },
+  ["nvim-lint"] = {
+    loaded = true,
+    path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/nvim-lint",
+    url = "https://github.com/mfussenegger/nvim-lint"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",

@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = servers
+    ensure_installed = {}
 })
 
 On_attach = function(_, _)
@@ -15,7 +15,17 @@ end
 
 require("mason-lspconfig").setup_handlers {
     function (server_name)
-        require("lspconfig")[server_name].setup { on_attach = On_attach }
+        local lspconfig = require("lspconfig")
+        lspconfig[server_name].setup { on_attach = On_attach }
+        if server_name == "tsserver" then
+            lspconfig.tsserver.setup {
+                init_options = {
+                    preferences = {
+                        disableSuggestions = true;
+                    }
+                }
+            }
+        end
     end
 }
 

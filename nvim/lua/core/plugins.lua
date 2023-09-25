@@ -85,6 +85,11 @@ return require('packer').startup(function(use)
         'norcalli/nvim-colorizer.lua',
         'nvim-lualine/lualine.nvim',
     }
+
+    -- linting
+    use {
+        'mfussenegger/nvim-lint'
+    }
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
