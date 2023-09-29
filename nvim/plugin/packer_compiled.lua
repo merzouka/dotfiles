@@ -119,6 +119,11 @@ _G.packer_plugins = {
     path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/everforest-nvim",
     url = "https://github.com/neanias/everforest-nvim"
   },
+  ["formatter.nvim"] = {
+    loaded = true,
+    path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/formatter.nvim",
+    url = "https://github.com/mhartington/formatter.nvim"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -248,6 +253,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/promise-async",
     url = "https://github.com/kevinhwang91/promise-async"
+  },
+  ["refactoring.nvim"] = {
+    loaded = true,
+    path = "/home/merzouka/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
+    url = "https://github.com/ThePrimeagen/refactoring.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

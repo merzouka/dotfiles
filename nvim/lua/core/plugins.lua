@@ -77,7 +77,14 @@ return require('packer').startup(function(use)
         "christoomey/vim-tmux-navigator",
         'theprimeagen/harpoon',
         'mbbill/undotree',
-        'nvim-treesitter/nvim-treesitter'
+        'nvim-treesitter/nvim-treesitter',
+        {
+            "ThePrimeagen/refactoring.nvim",
+            requires = {
+                {"nvim-lua/plenary.nvim"},
+                {"nvim-treesitter/nvim-treesitter"}
+            }
+        }
     }
 
     -- visual
@@ -90,6 +97,12 @@ return require('packer').startup(function(use)
     use {
         'mfussenegger/nvim-lint'
     }
+
+    -- formatting 
+    use {
+        'mhartington/formatter.nvim'
+    }
+
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
