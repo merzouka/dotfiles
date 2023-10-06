@@ -1,114 +1,168 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
+require('lazy').setup({
+    -- neovim json configuration
+    {
+        'folke/neoconf.nvim',
+        cmd = 'Neoconf',
+    },
 
-return require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-    use {
-       'nvim-telescope/telescope.nvim',
-        tag="0.1.0",
-        requires = { {'nvim-lua/plenary.nvim'} }
-    }
-    use "williamboman/mason.nvim"
+    -- files
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        },
+    },
+    'theprimeagen/harpoon',
 
-    -- lsp
-    use {
-        "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig"
-    }
+    -- lsp stuff
+    {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            'williamboman/mason-lspconfig.nvim',
+            'folke/neodev.nvim', -- add vim api functionality to lua_la
+            {
+                'williamboman/mason.nvim',
+                config = true, -- use default config
+            },
+            {
+                'j-hui/fidget.nvim',
+                tag = 'legacy',
+                opts = {}, -- call require('fidget')
+            },
+        },
+    },
 
-    -- neovim tree
-    use {
-        'nvim-tree/nvim-tree.lua',
-        'nvim-tree/nvim-web-devicons',
-    }
-    -- autocompletion
-    use {
-        "hrsh7th/nvim-cmp",
-        "hrsh7th/cmp-nvim-lsp",
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-cmdline',
-    }
+    -- completion
+    {
+        'hrsh7th/nvim-cmp',
+        dependencies = {
+            -- snippets engine
+            'L3MON4D3/LuaSnip',
+            'saadparwaiz1/cmp_luasnip',
 
-    -- snippets
-    use {
-        "L3MON4D3/LuaSnip",
-        "saadparwaiz1/cmp_luasnip",
-        "rafamadriz/friendly-snippets",
-    }
+            -- lsp completion
+            'hrsh7th/cmp-nvim-lsp',
 
-    -- color schemes
-    use {
-        'ribru17/bamboo.nvim',
+            -- friendly snippets
+            'rafamadriz/friendly-snippets',
+
+            -- other completion
+            -- 'hrsh7th/cmp-buffer',
+            -- 'hrsh7th/cmp-path',
+            -- 'hrsh7th/cmp-cmdline',
+        },
+    },
+
+    -- themes
+    'ribru17/bamboo.nvim',
+    'AlexvZyl/nordic.nvim',
+    "rebelot/kanagawa.nvim",
+    'navarasu/onedark.nvim',
+    'ellisonleao/gruvbox.nvim',
+    'Mofiqul/dracula.nvim',
+    {
         'neanias/everforest-nvim',
-        'AlexvZyl/nordic.nvim',
-        "rebelot/kanagawa.nvim",
-        'navarasu/onedark.nvim',
-        'ellisonleao/gruvbox.nvim',
-        'Mofiqul/dracula.nvim',
-    }
+        config = function()
+            vim.cmd.colorscheme 'everforest'
+        end,
+    },
 
-    -- folding
-    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+    -- status line
+    'nvim-lualine/lualine.nvim',
 
-    -- debugger
-    use {
-        'mfussenegger/nvim-dap',
-        'rcarriga/nvim-dap-ui',
-        'theHamsta/nvim-dap-virtual-text',
-        'jay-babu/mason-nvim-dap.nvim',
-    }
+    -- commenting
+    'numToStr/Comment.nvim',
+
+    -- Fuzzy Finder
+    {
+        'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            {
+                -- only runs if make is installed
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'make',
+                cond = function ()
+                    return vim.fn.executable 'make' == 1
+                end,
+            },
+        },
+    },
 
     -- editing
-    use {
-        'windwp/nvim-ts-autotag',
-        "kylechui/nvim-surround",
-        "Townk/vim-autoclose",
-        "christoomey/vim-tmux-navigator",
-        'theprimeagen/harpoon',
-        'mbbill/undotree',
+    --      treesitter
+    {
         'nvim-treesitter/nvim-treesitter',
-        {
-            "ThePrimeagen/refactoring.nvim",
-            requires = {
-                {"nvim-lua/plenary.nvim"},
-                {"nvim-treesitter/nvim-treesitter"}
-            }
-        }
-    }
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
+        build = ':TSUpdate',
+    },
+
+    --      folds
+    {
+        'kevinhwang91/nvim-ufo',
+        dependencies = {
+            'kevinhwang91/promise-async',
+        },
+    },
+
+    --      tags/quotation marks
+    'windwp/nvim-ts-autotag',
+    "kylechui/nvim-surround",
+    "m4xshen/autoclose.nvim",
+
+    --      undotree
+    'mbbill/undotree',
+
+    --      refactoring
+    {
+        "ThePrimeagen/refactoring.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+    },
+
+
+    -- debugging
+    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
+    'theHamsta/nvim-dap-virtual-text',
+    'jay-babu/mason-nvim-dap.nvim',
+
+    -- tmux
+    "christoomey/vim-tmux-navigator",
 
     -- visual
-    use {
-        'norcalli/nvim-colorizer.lua',
-        'nvim-lualine/lualine.nvim',
-    }
+    -- 'norcalli/nvim-colorizer.lua',
+    {
+        'rrethy/vim-hexokinase',
+        build = "make hexokinase"
+    },
 
     -- linting
-    use {
-        'mfussenegger/nvim-lint'
-    }
+    'mfussenegger/nvim-lint',
 
-    -- formatting 
-    use {
-        'mhartington/formatter.nvim'
-    }
+    -- formatting
+    'mhartington/formatter.nvim',
 
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-	vim.cmd("PackerInstall")
-end)
-
+}, {})
 

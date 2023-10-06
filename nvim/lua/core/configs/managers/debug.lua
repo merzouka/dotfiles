@@ -5,14 +5,14 @@ require("mason").setup {
 
 local dap, dapui = require("dap"), require("dapui")
 
-require("nvim-dap-virtual-text").setup()
+require("nvim-dap-virtual-text").setup({})
 require ('mason-nvim-dap').setup({
     handlers = {}, -- sets up dap in the predefined manner
 })
 
 dapui.setup()
 
-vim.keymap.set("v", "<leader>ee", dapui.eval)
+vim.keymap.set("v", "<leader>de", dapui.eval)
 vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
 vim.keymap.set("n", "<leader>dr", dap.continue)
 

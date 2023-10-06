@@ -26,6 +26,8 @@ vim.opt.undofile = true
 -- search: --------------------------------------------------------------------
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
 -- terminal colors: -----------------------------------------------------------
 vim.opt.termguicolors = true
@@ -35,6 +37,9 @@ vim.opt.scrolloff = 8
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "100"
+
+-- completion
+vim.o.completeopt = 'menuone,noselect'
 
 -- spell checking ------------------------------------------------------------
 vim.opt.spelllang = 'en_us'
@@ -60,8 +65,5 @@ vim.cmd([[
 
 ]])
 
--- color scheme
-vim.cmd("colorscheme gruvbox")
-
 -- display color in css
-vim.cmd("let g:Hexokinase_highlighters = ['virtual']")
+-- vim.cmd("let g:Hexokinase_highlighters = ['virtual']")
