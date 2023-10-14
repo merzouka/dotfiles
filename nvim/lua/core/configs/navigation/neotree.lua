@@ -8,7 +8,7 @@ require('neo-tree').setup({
     mappings = {
         ["P"] = { "toggle_preview", config = { use_float = true } },
         ["l"] = "focus_preview",
-        ["e"] = "rename",
+        ["r"] = "rename",
         ["d"] = "delete",
         ["s"] = "open_split",
         ["v"] = "open_vsplit",

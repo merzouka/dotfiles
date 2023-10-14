@@ -9,5 +9,6 @@ require("nvim-ts-autotag").setup()
 require("autoclose").setup({
     options = {
         auto_indent = true,
+        pair_spaces = false,
     }
 })
