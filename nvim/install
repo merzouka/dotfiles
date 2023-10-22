@@ -1,3 +1,8 @@
 #!/bin/bash
 
-sudo dnf install gcc npm go
+dependencies=(
+'gcc' 'npm' 'go'
+)
+for pkg in ${dependencies[@]}; do
+    sudo dnf install $pkg
+done

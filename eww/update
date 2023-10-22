@@ -1,17 +1,16 @@
 #!/bin/bash
 
-package_manager=$(pkgmanager)
+package_manager="dnf"
 config="$HOME/.config/eww"
 scripts_dir="$HOME/.local/bin"
-sudo $package_manager install gtk3-devel
-sudo $package_manager install libgdk-3-devel libgtk-3-devel \
-                                pango \
-                                gdk-pixbuf2-devel libgdk_pixbuf-2-devel \
-                                cairo-devel libcairo-devel libcairo-gobject-devel \
-                                glib2-devel libgio-devel libglib-2-devel libgobject-2-devel \
-                                gcclibs-devel libgcc-devel \
-                                glibc-devel 
-                                # gtk-layer-shell #if on wayland
+
+dependencies=(
+'gtk3-devel' 'pango' 'gdk-pixbuf2-devel' 'cairo-devel' 'glib2-devel'
+'glibc-devel' 
+)
+for pkg in ${dependencies[@]}; do
+    sudo dnf install $pkg
+done
 
 mkdir -p "$config/source"
 

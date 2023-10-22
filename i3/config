@@ -44,11 +44,11 @@ set $ws2 "2:browser"
 set $ws3 "3:utility" 
 set $ws4 "4:editor" 
 set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
+set $ws6 "6:entertainment"
+set $ws7 "7:communication"
 set $ws8 "8:files"
-set $ws9 "9:communication"
-set $ws10 "10:entertainment"
+set $ws9 "9"
+set $ws10 "10"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
