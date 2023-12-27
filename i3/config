@@ -12,11 +12,10 @@
 set $mod Mod4
 
 # includes 
-include ~/.config/i3/assignments.conf
-include ~/.config/i3/keybindings.conf
-include ~/.config/i3/commands.conf
-include ~/.config/i3/colorschemes/colorscheme.conf
-include ~/.config/i3/colors.conf
+include ~/.config/i3/parts/assignments.conf
+include ~/.config/i3/parts/keybindings.conf
+include ~/.config/i3/parts/commands.conf
+include ~/.config/i3/parts/colors.conf
 
 # remove title bars from windows
 default_border pixel 1

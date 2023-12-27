@@ -1,5 +1,10 @@
 #!/bin/bash
 
-CURRENT_DATE=$(date "+%Y-%m-%d_%H:%M:%S")
-echo $CURRENT_DATE &> ~/tmp
-import -window root -quality 90 ~/Pictures/Screenshots/$CURRENT_DATE.png &
+screenshots=~/Pictures/Screenshots
+if [[ ! -e $screenshots ]]; then
+    mkdir -p $screenshots
+fi
+
+current_date=$(date "+%Y-%m-%d_%H:%M:%S")
+echo $current_date &> ~/tmp
+import -window root -quality 90 "$screenshots/$current_date.png" &
