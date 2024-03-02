@@ -1,0 +1,62 @@
+{
+    "everforest" : {
+        "bg": "#2D353B",
+        "fg": "#D3C6AA",
+        "urgent": "#E67E80",
+        "inactive":"#859289", 
+        "active": "#83C092",
+        "black": "#232A2E",
+        "white": "#D3C6AA",
+        "red": "#543A48", 
+        "green": "#A7C080",
+        "blue": "#3A515D",
+        "cyan": "#7FBBB3",
+        "magenta": "#D699B6",
+        "signature": "#A7C080"
+    },
+    "gruvbox" : {
+        "bg": "#282828",
+        "fg": "#ebdbb2",
+        "urgent": "#cc241d",
+        "inactive":"#928374", 
+        "active": "#fe8019",
+        "black": "#1d2021",
+        "white": "#fbf1c7",
+        "red": "#fb4934", 
+        "green": "#79740e",
+        "blue": "#458588",
+        "cyan": "#83a598",
+        "magenta": "#b16286",
+        "signature": "#fe8019"
+    },
+    "dracula" : {
+        "bg": "#282A36",
+        "fg": "#F8F8F2",
+        "urgent": "#FF6E6E",
+        "inactive":"#44475A", 
+        "active": "#6272A4",
+        "black": "#191A21",
+        "white": "#ABB2BF",
+        "red": "#FF5555", 
+        "green": "#50fa7b",
+        "blue": "#8BE9FD",
+        "cyan": "#A4FFFF",
+        "magenta": "#FF92DF",
+        "signature": "#6272A4"
+    },
+    "catppuccin" : {
+        "bg": "#1e1e2e",
+        "fg": "#f5e0dc",
+        "urgent": "#eba0ac",
+        "inactive":"#9399b2",
+        "active": "#f2cdcd",
+        "black": "#181825",
+        "white": "#cdd6f4",
+        "red": "#f38ba8",
+        "green": "#a6e3a1",
+        "blue": "#89b4fa",
+        "cyan": "#74c7ec",
+        "magenta": "#cba6f7",
+        "signature": "#f5e0dc"
+    }
+}

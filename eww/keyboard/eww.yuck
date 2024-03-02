@@ -7,8 +7,8 @@
     )
 )
 
-(defvar selected "fr")
-(defvar layouts '["fr" ,"us" ,"ar"]')
+(defvar selected "dv")
+(defvar layouts '["fr" ,"us" ,"ar", "dv"]')
 
 (defwidget layout [value active]
     (button :class "layout-${active ? 'active' : 'inactive'}"

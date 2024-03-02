@@ -24,7 +24,7 @@ dependencies=(
 'i3' 'i3status' 'i3lock' 'xbacklight' 'feh' 
 # 'utils'
 'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
-'alacritty'
+'alacritty' 'pass' 'gpg'
 #redundant 'polybar'
 )
 for pkg in ${dependencies[@]}; do
