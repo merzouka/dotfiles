@@ -18,7 +18,10 @@ require('lazy').setup({
         cmd = 'Neoconf',
         init = function ()
             require("neoconf").setup()
-        end
+        end,
+        opts = {
+            priority = 50,
+        }
     },
 
     -- files
@@ -48,6 +51,14 @@ require('lazy').setup({
                 tag = 'legacy',
                 opts = {}, -- call require('fidget')
             },
+        },
+    },
+    -- typescript
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+        opts = {
         },
     },
 
@@ -166,6 +177,32 @@ require('lazy').setup({
 
     -- formatting
     'mhartington/formatter.nvim',
+
+    -- specialized
+    -- latex
+    {
+        "lervag/vimtex",
+        init = function()
+            -- Use init for configuration, don't use the more common "config".
+        end
+    },
+    -- obsidian
+    {
+        "epwalsh/obsidian.nvim",
+        version = "*",
+        lazy = true,
+        event = {
+          -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+          -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+          "BufReadPre ".. vim.fn.expand("~") .."/notes/obsidian/**/*.md",
+          "BufNewFile ".. vim.fn.expand("~") .."/notes/obsidian/**/*.md",
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        opts = {
+        },
+    }
 
 }, {})
 
