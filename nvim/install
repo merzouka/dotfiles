@@ -1,8 +1,10 @@
 #!/bin/bash
 
 dependencies=(
-'gcc' 'npm' 'go'
+'gcc' 'npm' 'go' 'texlive-scheme-medium' 'latexmk'
 )
 for pkg in ${dependencies[@]}; do
     sudo dnf install $pkg
 done
+
+# install texlive and latexmk
