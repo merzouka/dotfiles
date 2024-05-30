@@ -12,3 +12,5 @@ require("autoclose").setup({
         pair_spaces = false,
     }
 })
+
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")

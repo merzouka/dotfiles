@@ -82,6 +82,9 @@ mason_lspconfig.setup({
 -- automatically set up servers
 mason_lspconfig.setup_handlers({
     function(server_name)
+        if server_name == "tsserver" then
+            return
+        end
         require('lspconfig')[server_name].setup({
             capabilities = capabilities,
             on_attach = on_attach,

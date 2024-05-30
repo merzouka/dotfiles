@@ -28,6 +28,7 @@ require('lazy').setup({
     {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
+        enabled = false,
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons",
@@ -35,6 +36,7 @@ require('lazy').setup({
         },
     },
     'theprimeagen/harpoon',
+    'mbbill/undotree',
 
     -- lsp stuff
     {
@@ -97,7 +99,10 @@ require('lazy').setup({
     },
 
     -- status line
-    'nvim-lualine/lualine.nvim',
+    {
+        'nvim-lualine/lualine.nvim',
+        enabled = false,
+    },
 
     -- commenting
     'numToStr/Comment.nvim',

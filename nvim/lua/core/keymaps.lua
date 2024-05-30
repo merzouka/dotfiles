@@ -31,3 +31,6 @@ vim.keymap.set("v", "~", "~gv")
 
 -- search selection
 vim.keymap.set("v", "/", "<Esc>/\\%V")
+
+-- file browser
+vim.keymap.set({ "n", "i" }, "<C-n>", "<cmd>Sex<CR>")
