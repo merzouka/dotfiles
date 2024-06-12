@@ -1,6 +1,6 @@
 #!/bin/bash
 
-input=$(if [ "$1" == "" ]; then echo "fr,us,ar,dv"; else echo "$1"; fi)
+input=$(if [ "$1" == "" ]; then echo "fr,us,ar"; else echo "$1"; fi)
 layouts=($(echo $input | awk 'BEGIN {RS=","} {print $0}'))
 current=$(setxkbmap -query | grep layout | awk -F ':\\s+' '{print $2}')
 if [[ "$current" == "dvorak" ]]; then
@@ -27,5 +27,5 @@ for i in $(seq 0 $(( ${#layouts[@]} - 1 ))); do
     (( i++ ))
 done
 
-setlayout 3
+setlayout 1
 

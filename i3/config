@@ -80,10 +80,10 @@ mode "resize" {
 set $bg #000000
 bar {
     position top
-    status_command i3status
+    status_command i3blocks
     strip_workspace_name yes
-    font pango:Poppins Regular 8
-    separator_symbol " "
+    # font pango:Poppins Regular 8
+    # separator_symbol " "
 }
 
 # bar {

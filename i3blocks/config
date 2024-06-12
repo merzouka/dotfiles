@@ -25,12 +25,29 @@
 # The top properties below are applied to every block, but can be overridden.
 # Each block command defaults to the script name to avoid boilerplate.
 # Change $SCRIPT_DIR to the location of your scripts!
-command=$SCRIPT_DIR/$BLOCK_NAME
+command=/home/merzouka/.config/i3blocks/scripts/$BLOCK_NAME
 separator_block_width=15
-markup=pango
+markup=none
 
+# Volume indicator
+#
+# The first parameter sets the step (and units to display)
+# The second parameter overrides the mixer selection
+# See the script for details.
+#
+#
+#
 
-
+[volume]
+#label=♪
+label=VOL
+interval=once
+signal=15
+#STEP=5%
+#
+[brightness]
+command=./brightness/bin/brightness -a /sys/class/backlight/intel_backlight/actual_brightness -m /sys/class/backlight/intel_backlight/max_brightness
+interval=persist
 
 # Memory usage
 #
@@ -61,16 +78,21 @@ interval=30
 # If the instance is not specified, use the interface used for default route.
 # The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
 [iface]
-# IFACE=wlan0
-label=
+#IFACE=wlan0
+color=#00FF00
 interval=10
 separator=false
 
-[wifi]
-# INTERFACE=wlp3s0
-label= 
-interval=10
-separator=false
+# [wifi]
+# command=/home/merzouka/.config/i3blocks/scripts/wifi
+# label=wifi:
+# #INTERFACE=wlan0
+# interval=60
+# #COLOR_GE80=#00FF00
+# #COLOR_GE60=#FFF600
+# #COLOR_GE40=#FFAE00
+# #COLOR_LOWR=#FF0000
+# #COLOR_DOWN=#FF0000
 
 [bandwidth]
 #INTERFACE=eth0
@@ -90,50 +112,18 @@ min_width=CPU 100.00%
 label=LOAD
 interval=10
 
-# Main Bar
-# brightness indicator
-[brightness]
-command=$SCRIPT_DIR/brightness
-interval=once
-signal=1
-
-# Volume indicator
-#
-# The first parameter sets the step (and units to display)
-# The second parameter overrides the mixer selection
-# See the script for details.
-
-[volume]
-command=$SCRIPT_DIR/volume
-interval=once
-signal=2
-#STEP=5%
-
-# Connection
-[connection]
-command=$SCRIPT_DIR/connection
-interval=10
-
 # Battery indicator
 #
 # The battery instance defaults to 0.
-[battery]
-command=$SCRIPT_DIR/battery
-interval=10
-
-# Keybaord layout
-[layout]
-command=$SCRIPT_DIR/layout
-interval=once
-signal=11
+[battery2]
+markup=pango
+interval=30
 
 # Date Time
 #
 [time]
-command=date '+%Y-%m-%d %H:%M'
+command=date '+%Y-%m-%d %H:%M:%S'
 interval=5
-
-# End Main Bar
 
 # Generic media player support
 #
@@ -178,3 +168,4 @@ interval=5
 #markup=pango
 #interval=once
 #signal=11
+
