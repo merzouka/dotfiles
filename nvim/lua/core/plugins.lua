@@ -36,7 +36,10 @@ require('lazy').setup({
         },
     },
     'theprimeagen/harpoon',
-    'mbbill/undotree',
+    {
+        'mbbill/undotree',
+        enabled = false,
+    },
 
     -- lsp stuff
     {
@@ -58,6 +61,7 @@ require('lazy').setup({
     -- typescript
     {
         "pmizio/typescript-tools.nvim",
+        enabled = false,
         dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
         ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
         opts = {
@@ -79,8 +83,9 @@ require('lazy').setup({
             'rafamadriz/friendly-snippets',
 
             -- other completion
-            -- 'hrsh7th/cmp-buffer',
-            -- 'hrsh7th/cmp-path', 'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            -- 'hrsh7th/cmp-cmdline',
         },
     },
 
@@ -162,10 +167,25 @@ require('lazy').setup({
 
 
     -- debugging
-    'mfussenegger/nvim-dap',
-    'rcarriga/nvim-dap-ui',
-    'theHamsta/nvim-dap-virtual-text',
-    'jay-babu/mason-nvim-dap.nvim',
+    {
+        'mfussenegger/nvim-dap',
+        enabled = false,
+    },
+    {
+        'rcarriga/nvim-dap-ui',
+        enabled = false,
+        dependencies = {
+            "nvim-neotest/nvim-nio",
+        },
+    },
+    {
+        'theHamsta/nvim-dap-virtual-text',
+        enabled = false,
+    },
+    {
+        'jay-babu/mason-nvim-dap.nvim',
+        enabled = false,
+    },
 
     -- tmux
     "christoomey/vim-tmux-navigator",
@@ -185,12 +205,12 @@ require('lazy').setup({
 
     -- specialized
     -- latex
-    {
-        "lervag/vimtex",
-        init = function()
-            -- Use init for configuration, don't use the more common "config".
-        end
-    },
+    -- {
+    --     "lervag/vimtex",
+    --     init = function()
+    --         -- Use init for configuration, don't use the more common "config".
+    --     end
+    -- },
 
 }, {})
 

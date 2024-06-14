@@ -4,6 +4,10 @@ require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
 cmp.setup {
+    performance = {
+        max_view_entries = 7,
+        fetchin_timeout = 1000,
+    },
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -31,12 +35,28 @@ cmp.setup {
             end
         end, { 'i', 's' }),
     },
-    sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    },
-    {
-        { name = 'buffer' },
+    sources = cmp.config.sources(
+        {
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' }
+        },
+        {
+            {
+                name = 'buffer',
+                get_bufnrs = function()
+                    local buf = vim.api.nvim_get_current_buf()
+                    local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+                    if byte_size > 1024 * 1024 then -- 1 Megabyte max
+                        return {}
+                    end
+                    return { buf }
+                end
+            },
+            { name = 'path' },
+        }
+    ),
+    view = {
+        docs = true
     }
 }
 

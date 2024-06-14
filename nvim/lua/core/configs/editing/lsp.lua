@@ -82,9 +82,9 @@ mason_lspconfig.setup({
 -- automatically set up servers
 mason_lspconfig.setup_handlers({
     function(server_name)
-        if server_name == "tsserver" then
-            return
-        end
+        -- if server_name == "tsserver" then
+        --     return
+        -- end
         require('lspconfig')[server_name].setup({
             capabilities = capabilities,
             on_attach = on_attach,
@@ -96,3 +96,7 @@ mason_lspconfig.setup_handlers({
 
 -- set up neodev for lua vim support
 require('neodev').setup()
+
+-- Some servers have issues with backup files, see #649
+vim.opt.backup = false
+vim.opt.writebackup = false
