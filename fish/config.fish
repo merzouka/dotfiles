@@ -6,3 +6,5 @@ end
 zoxide init fish | source
 alias cd=z
 
+# set up nvim as editor
+set -gx EDITOR nvim
