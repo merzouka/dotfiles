@@ -138,4 +138,4 @@ git config --global user.email $github_email
 ssh-keygen -t ed25519 -C $github_email
 eval "$(ssh-agent -s)"
 ssh-add $key_path
-
+ln -s $dotfiles_path/ssh/config ~/.ssh/config
