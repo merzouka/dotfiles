@@ -21,11 +21,11 @@ dependencies=(
 # redundant 'vim' 'mpc'
 # 'wm' 'stuff'
 'i3' 'i3status' 'i3locks' 'xbacklight' 'feh' 
-# 'utils'
-'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
-'alacritty' 'pass' 'gpg'
 # shell
 'fish'
+# 'utils'
+'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
+'alacritty' 'pass' 'gpg' 'zoxide'
 #redundant 'polybar'
 )
 
@@ -134,3 +134,4 @@ git config --global user.email $github_email
 ssh-keygen -t ed25519 -C $github_email
 eval "$(ssh-agent -s)"
 ssh-add $key_path
+
