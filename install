@@ -20,12 +20,15 @@ dependencies=(
 'brightnessctl'
 # redundant 'vim' 'mpc'
 # 'wm' 'stuff'
-'i3' 'i3status' 'i3lock' 'xbacklight' 'feh' 
+'i3' 'i3status' 'i3locks' 'xbacklight' 'feh' 
 # 'utils'
 'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
 'alacritty' 'pass' 'gpg'
+# shell
+'fish'
 #redundant 'polybar'
 )
+
 for pkg in ${dependencies[@]}; do
     sudo dnf install $pkg
 done
@@ -63,6 +66,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 cd "$HOME/.config"
 
+ln -s "$dotfiles_path/fish" .
 ln -s "$dotfiles_path/nvim" .
 ln -s "$dotfiles_path/i3" .
 ln -s "$dotfiles_path/alacritty" .
@@ -73,6 +77,11 @@ ln -s "$dotfiles_path/picom" .
 # ln -s "$dotfiles_path/wired" .
 # ln -s "$dotfiles_path/polybar" .
 ln -s "$dotfiles_path/dunst" .
+
+# setting up shell
+fish_path="/usr/bin/fish"
+echo $fish_path | sudo tee -a /etc/shells
+chsh -s $fish_path
 
 # source tmux config
 tmux source "$HOME/.config/tmux/tmux.conf"

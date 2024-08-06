@@ -45,9 +45,9 @@ interval=once
 signal=15
 #STEP=5%
 #
-[brightness]
-command=./brightness/bin/brightness -a /sys/class/backlight/intel_backlight/actual_brightness -m /sys/class/backlight/intel_backlight/max_brightness
-interval=persist
+# [brightness]
+# command=./brightness/bin/brightness -a /sys/class/backlight/intel_backlight/actual_brightness -m /sys/class/backlight/intel_backlight/max_brightness
+# interval=persist
 
 # Memory usage
 #
