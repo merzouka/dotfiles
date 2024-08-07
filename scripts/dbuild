@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ $1 == "--help" ]; then
+    printf "dbuild REPO [dockerfile] [context]\n\n"
+    printf "a command line utility to help with building and pushing docker images with proper versionning, only keeping the latest version\n\n"
+    printf "REPO        the name repository\n"
+    printf "dockerfile  the path to the docker file, default: ./Dockerfile\n"
+    printf "context     context to use for the image\n"
+    exit
+fi
+
+if [ $1 == "" ]; then
+    echo "Error: please enter the repository name"
+fi
+
+repo="$1"
+tags=($(docker image ls $repo --format {{.Tag}}))
+version=${tags[0]}
+
+prompt="version"
+if [ "$version" != "" ]; then
+    docker rmi -f "$repo:$version"
+    prompt="$prompt ($version)"
+fi
+prompt="$prompt> "
+
+read -p "$prompt" version
+
+if [ "$3" != "" ]; then
+    docker context use $3
+fi
+
+dockerfile="./Dockerfile"
+if [ "$2" != "" ]; then
+    dockerfile="$2"
+fi
+
+image="$repo:$version" 
+docker build -t $image -f $dockerfile .
+docker tag $image "$repo:latest"
+
+docker push $image
