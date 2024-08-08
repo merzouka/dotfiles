@@ -3,7 +3,7 @@ if status is-interactive
 end
 
 # adding go binaries
-set -gx PATH "$HOME/go/bin/" $PATH
+set -gx PATH "$HOME/go/bin/" "$HOME/dotfiles/scripts/" $PATH
 
 # zoxide
 zoxide init fish | source

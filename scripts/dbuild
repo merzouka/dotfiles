@@ -19,7 +19,7 @@ version=${tags[0]}
 
 prompt="version"
 if [ "$version" != "" ]; then
-    docker rmi -f "$repo:$version"
+    docker rmi -f "$repo"
     prompt="$prompt ($version)"
 fi
 prompt="$prompt> "
@@ -40,3 +40,4 @@ docker build -t $image -f $dockerfile .
 docker tag $image "$repo:latest"
 
 docker push $image
+docker push "$repo:latest"
