@@ -11,3 +11,7 @@ alias cd=z
 
 # set up nvim as editor
 set -gx EDITOR nvim
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

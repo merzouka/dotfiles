@@ -33,4 +33,4 @@ vim.keymap.set("v", "~", "~gv")
 vim.keymap.set("v", "/", "<Esc>/\\%V")
 
 -- file browser
-vim.keymap.set({ "n", "i" }, "<C-n>", "<cmd>Sex<CR>")
+vim.keymap.set({ "n", "i" }, "<C-n>", "<cmd>Explore<CR>")
