@@ -18,3 +18,8 @@ if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# tmuxifier
+set -gx PATH "$HOME/.tmuxifier/bin" $PATH
+eval (tmuxifier init - fish)
+export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux/layouts/"
