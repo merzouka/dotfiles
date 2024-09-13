@@ -23,3 +23,6 @@ end
 set -gx PATH "$HOME/.tmuxifier/bin" $PATH
 eval (tmuxifier init - fish)
 export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux/layouts/"
+
+# vimtex
+set -gx VIMTEX_OUTPUT_DIRECTORY './out'
