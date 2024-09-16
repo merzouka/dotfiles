@@ -26,3 +26,4 @@ export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux/layouts/"
 
 # vimtex
 set -gx VIMTEX_OUTPUT_DIRECTORY './out'
+alias tf='terraform'
