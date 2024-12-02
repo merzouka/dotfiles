@@ -38,7 +38,7 @@ require('lazy').setup({
     'theprimeagen/harpoon',
     {
         'mbbill/undotree',
-        enabled = false,
+        enabled = true,
     },
 
     -- lsp stuff
