@@ -212,7 +212,11 @@ require('lazy').setup({
             -- VimTeX configuration goes here
             vim.g.vimtex_view_method = "zathura"
         end
-}
+    },
 
+    -- laravel/blade
+    {
+        'jwalton512/vim-blade',
+    }
 }, {})
 
