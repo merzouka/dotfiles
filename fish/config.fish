@@ -35,3 +35,6 @@ alias tf='terraform'
 # function fish_prompt
 #     printf "%s: %s> " $USER $(pwd)
 # end
+
+# flutter
+fish_add_path -g -p ~/development/flutter/bin
