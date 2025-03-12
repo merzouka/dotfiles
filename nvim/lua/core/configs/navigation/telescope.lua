@@ -13,3 +13,5 @@ vim.keymap.set('n', '<leader>hs', builtin.help_tags, { desc = '[H]elp [S]earch' 
 
 -- telescope fzf native
 pcall(require('telescope').load_extension, 'fzf')
+-- flutter
+require("telescope").load_extension("flutter")
