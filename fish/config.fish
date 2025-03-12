@@ -7,7 +7,9 @@ set -gx PATH "$HOME/go/bin/" "$HOME/dotfiles/scripts/" $PATH
 # add binaries installed by pip to path
 set -gx PATH "$HOME/.local/bin" "$HOME/dotfiles/scripts/" $PATH
 # intellij
-set -gx PATH "$HOME/esi/micro-services/editor/idea-IU-243.23654.153/bin" $PATH
+set -gx PATH "$HOME/editors/idea-IU-243.23654.153/bin" $PATH
+# android cmd-tools
+set -gx PATH "$HOME/Android/Sdk/cmdline-tools/latest/bin" $PATH
 
 # zoxide
 zoxide init fish | source
