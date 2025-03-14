@@ -139,3 +139,7 @@ ssh-keygen -t ed25519 -C $github_email
 eval "$(ssh-agent -s)"
 ssh-add $key_path
 ln -s $dotfiles_path/ssh/config ~/.ssh/config
+
+# fnm (node version manager)
+# look for documentation on installation in https://github.com/Schniz/fnm?tab=readme-ov-file
+curl -fsSL https://fnm.vercel.app/install | bash
