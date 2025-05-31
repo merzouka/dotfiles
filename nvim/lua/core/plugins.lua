@@ -62,15 +62,6 @@ require('lazy').setup({
             },
         },
     },
-    -- typescript
-    {
-        "pmizio/typescript-tools.nvim",
-        enabled = false,
-        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-        ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
-        opts = {
-        },
-    },
 
     -- completion
     {
@@ -110,7 +101,7 @@ require('lazy').setup({
     -- status line
     {
         'nvim-lualine/lualine.nvim',
-        enabled = false,
+        enabled = true,
     },
 
     -- commenting
