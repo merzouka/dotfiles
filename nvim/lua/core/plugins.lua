@@ -49,7 +49,7 @@ require('lazy').setup({
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            'williamboman/mason-lspconfig.nvim',
+            { 'williamboman/mason-lspconfig.nvim', version = '1.*', },
             'folke/neodev.nvim', -- add vim api functionality to lua_la
             {
                 'williamboman/mason.nvim',
@@ -142,7 +142,6 @@ require('lazy').setup({
         },
         build = ':TSUpdate',
     },
-    'lervag/vimtex',
 
     --      folds
     {
@@ -207,31 +206,10 @@ require('lazy').setup({
     -- formatting
     'mhartington/formatter.nvim',
 
-    -- specialized
-    -- latex
-    {
-        "lervag/vimtex",
-        lazy = false,     -- we don't want to lazy load VimTeX
-        init = function()
-            -- VimTeX configuration goes here
-            vim.g.vimtex_view_method = "zathura"
-        end
-    },
-
     -- -- laravel/blade
     -- {
     --     'jwalton512/vim-blade',
     -- }
     --
-    -- flutter
-    {
-        'nvim-flutter/flutter-tools.nvim',
-        lazy = false,
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'stevearc/dressing.nvim', -- optional for vim.ui.select
-        },
-        config = true,
-    },
 }, {})
 

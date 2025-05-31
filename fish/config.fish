@@ -33,6 +33,10 @@ export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux/layouts/"
 # vimtex
 set -gx VIMTEX_OUTPUT_DIRECTORY './out'
 alias tf='terraform'
+alias k='kubectl'
 
-# flutter
-fish_add_path -g -p ~/development/flutter/bin
+# ardupilot
+
+set -gax PATH $HOME/code/projects/drone/load/sim/ardupilot/Tools/autotest
+set -gpx PATH /usr/lib/ccache
+
