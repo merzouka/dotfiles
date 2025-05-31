@@ -40,3 +40,5 @@ alias k='kubectl'
 set -gax PATH $HOME/code/projects/drone/load/sim/ardupilot/Tools/autotest
 set -gpx PATH /usr/lib/ccache
 
+# neovim
+set -gax PATH /opt/nvim-linux-x86_64/bin
