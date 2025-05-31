@@ -6,3 +6,4 @@ vim.cmd("let g:Hexokinase_optInPatterns = [ 'full_hex', 'triple_hex', 'rgb', 'rg
 
 -- undotree mapping
 vim.keymap.set('n', '<leader>ut', vim.cmd.UndotreeToggle, { desc = '[U]ndo[T]ree' })
+require("dressing").setup()

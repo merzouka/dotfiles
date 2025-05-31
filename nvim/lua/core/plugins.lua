@@ -190,6 +190,10 @@ require('lazy').setup({
         'rrethy/vim-hexokinase',
         build = "make hexokinase"
     },
+    {
+        'stevearc/dressing.nvim',
+        opts = {},
+    },
 
     -- linting
     'mfussenegger/nvim-lint',
