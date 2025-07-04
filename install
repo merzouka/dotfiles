@@ -64,8 +64,6 @@ done
 # arandr: gui tool for display managment
 # rofi
 
-# install packer
-# git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 # install tpm
 read -p "Install tpm (module for battery managenent) [y/N]: " ans
 if [ "$ans" = "y" ]; then
