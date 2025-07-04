@@ -30,7 +30,6 @@ dependencies=(
 # 'utils'
 		'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
 		'alacritty' 'pass' 'gpg' 'zoxide'
-#redundant 'polybar'
 	     )
 
 for pkg in ${dependencies[@]}; do
@@ -85,9 +84,6 @@ ln -s "$dotfiles_path/alacritty" .
 ln -s "$dotfiles_path/rofi" .
 ln -s "$dotfiles_path/tmux" .
 ln -s "$dotfiles_path/picom" .
-# ln -s "$dotfiles_path/eww" .
-# ln -s "$dotfiles_path/wired" .
-# ln -s "$dotfiles_path/polybar" .
 ln -s "$dotfiles_path/dunst" .
 
 # setting up shell
@@ -103,14 +99,6 @@ fi
 echo "Applying Tmux configuration..."
 tmux source "$HOME/.config/tmux/tmux.conf"
 # Note: press prefix + I to install packages in tmux
-
-# install eww
-# ./eww/update
-# mv $HOME/.local/bin/eww-copy $HOME/.local/bin/eww
-
-# install wired
-# ./wired/update
-# mv $HOME/.local/bin/wired-copy $HOME/.local/bin/wired
 
 # installing fonts
 echo "Adding Fonts..."
