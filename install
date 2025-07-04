@@ -1,152 +1,193 @@
 #!/bin/bash
-#
-# # update grub config
-# sudo grub2-mkconfig -o /etc/grub2.cfg
-# sudo grub2-mkconfig -o /etc/grub2-efi.cfg
-#
-# bindir="$HOME/.local/bin"
-# if [[ ! -e "$bindir" ]]; then
-#     mkdir -p "$bindir"
-# fi
-#
-# package_manager="dnf"
-# dotfiles_path="$HOME/dotfiles"
-# fonts_dir="$HOME/.fonts"
-#
-# # make scripts globally available
-# scripts_path="$dotfiles_path/scripts"
-# ln -s "$scripts_path/swaplayout" $bindir
-# #install dependencies
-# dependencies=(
-# # general dependencies
-# 'git' 'gcc' 'neovim' 'npm' 'lxappearance' 'numlockx' 'maim' 'pipewire' 'xclip' 'ripgrep' 'powerprofilesctl' 'picom' 
-# 'acpi' 'wpctl' 'amixer' 'glib' 'acpid' 'bluez' 'bluez-tools'
-# 'brightnessctl'
-# # redundant 'vim' 'mpc'
-# # 'wm' 'stuff'
-# 'i3' 'i3status' 'i3locks' 'xbacklight' 'feh' 
-# # shell
-# 'fish'
-# # 'utils'
-# 'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
-# 'alacritty' 'pass' 'gpg' 'zoxide'
-# #redundant 'polybar'
-# )
-#
-# for pkg in ${dependencies[@]}; do
-#     sudo dnf install $pkg
-# done
-#
-# # lxappearance: change gtk theme
-# # numlockx: toggle numlock
-# # maim: screenshot
-# # pipewire: volume
-# # xclip: command to copy to clipboard 
-# # ripgrep: required for nvim project grep
-# # powerprofilesctl: switche power profile
-# # mpc: music
-# # picom: compositer
-# # acpi: battery info
-# # amixer: volume
-# # wpctl: volume
-# # glib: utility
-# # acpid: listen to battery change events
-# # bluez: a set of tools for controlling bluetooth from terminal
-#
-# #utils
-# # pavucontrol: sound control
-# # blueman: gui bluetooth manager
-# # tlp: battery management
-# # xrandr: cli tool for display managment
-# # arandr: gui tool for display managment
-# # rofi
-#
-# # install packer
-# # git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-# # install tpm
-# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# # rust
-# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-#
-# cd "$HOME/.config"
-#
-# ln -s "$dotfiles_path/fish" .
-# ln -s "$dotfiles_path/nvim" .
-# ln -s "$dotfiles_path/i3" .
-# ln -s "$dotfiles_path/alacritty" .
-# ln -s "$dotfiles_path/rofi" .
-# ln -s "$dotfiles_path/tmux" .
-# ln -s "$dotfiles_path/picom" .
-# # ln -s "$dotfiles_path/eww" .
-# # ln -s "$dotfiles_path/wired" .
-# # ln -s "$dotfiles_path/polybar" .
-# ln -s "$dotfiles_path/dunst" .
-#
-# # setting up shell
-# fish_path="/usr/bin/fish"
-# echo $fish_path | sudo tee -a /etc/shells
-# chsh -s $fish_path
-#
-# # source tmux config
-# tmux source "$HOME/.config/tmux/tmux.conf"
-# # Note: press prefix + I to install packages in tmux
-#
-# # install eww
-# # ./eww/update
-# # mv $HOME/.local/bin/eww-copy $HOME/.local/bin/eww
-#
-# # install wired
-# # ./wired/update
-# # mv $HOME/.local/bin/wired-copy $HOME/.local/bin/wired
-#
-# # installing fonts
-# mkdir -p "$fonts_dir/"
-# cp -r ./fonts/* "$fonts_dir/"
-# fc-cache
-#
-# # tlp config
-# sudo ln -s $dotfiles_path/tlp/tlp.conf /etc/
-#
-# # nvim dependencies
-# ~/.config/nvim/install
-#
-# # wallpapers
-# cp -r $dotfiles_path/wallpapers $HOME/Pictures/wallpapers
-#
-# # enable needed services
-# sudo systemctl enable acpid.service --now
-#
-# # day to day used stuff
-# # rpm fusion
-# sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-# sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-#
-# # vscode
-# sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-# sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-# dnf check-update
-# sudo dnf install code
-#
-# # vlc 
-# sudo dnf install vlc
-# #
-# # git setup
-# key_path="$HOME/.ssh/github"
-# github_email="marzoukayouness@gmail.com"
-# git config --global user.name merzouka
-# git config --global user.email $github_email
-# read -p "generate ssh key [y/N]: " answer
-# if [ "$answer" = "y" ]; then
-#     ssh-keygen -t ed25519 -C $github_email
-#     eval "$(ssh-agent -s)"
-#     ssh-add $key_path
-# fi
-# ln -s $dotfiles_path/ssh/config ~/.ssh/config
-#
-# # fnm (node version manager)
-# # look for documentation on installation and configuration in https://github.com/Schniz/fnm?tab=readme-ov-file
-# curl -fsSL https://fnm.vercel.app/install | bash
 
-# tmuxifier
-# git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
+# update grub config
+sudo grub2-mkconfig -o /etc/grub2.cfg
+sudo grub2-mkconfig -o /etc/grub2-efi.cfg
+
+bindir="$HOME/.local/bin"
+if [[ ! -e "$bindir" ]]; then
+mkdir -p "$bindir"
+fi
+
+package_manager="dnf"
+dotfiles_path="$HOME/dotfiles"
+fonts_dir="$HOME/.fonts"
+
+# make scripts globally available
+scripts_path="$dotfiles_path/scripts"
+ln -s "$scripts_path/swaplayout" $bindir
+#install dependencies
+dependencies=(
+# general dependencies
+		'git' 'gcc' 'neovim' 'npm' 'lxappearance' 'numlockx' 'maim' 'pipewire' 'xclip' 'ripgrep' 'powerprofilesctl' 'picom' 
+		'acpi' 'wpctl' 'amixer' 'glib' 'acpid' 'bluez' 'bluez-tools'
+		'brightnessctl'
+# redundant 'vim' 'mpc'
+# 'wm' 'stuff'
+		'i3' 'i3status' 'i3locks' 'xbacklight' 'feh' 
+# shell
+		'fish'
+# 'utils'
+		'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
+		'alacritty' 'pass' 'gpg' 'zoxide'
+#redundant 'polybar'
+	     )
+
+for pkg in ${dependencies[@]}; do
+read -p "Install $pkg [y/N]: " ans
+if [ "$ans" = "y" ]; then
+sudo dnf install $pkg
+fi
+done
+
+# lxappearance: change gtk theme
+# numlockx: toggle numlock
+# maim: screenshot
+# pipewire: volume
+# xclip: command to copy to clipboard 
+# ripgrep: required for nvim project grep
+# powerprofilesctl: switche power profile
+# mpc: music
+# picom: compositer
+# acpi: battery info
+# amixer: volume
+# wpctl: volume
+# glib: utility
+# acpid: listen to battery change events
+# bluez: a set of tools for controlling bluetooth from terminal
+
+#utils
+# pavucontrol: sound control
+# blueman: gui bluetooth manager
+# tlp: battery management
+# xrandr: cli tool for display managment
+# arandr: gui tool for display managment
+# rofi
+
+# install packer
+# git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+# install tpm
+read -p "Install tpm (module for battery managenent) [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+# rust
+read -p "Install Rust [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+
+echo "Copying configuration..."
+cd "$HOME/.config"
+
+ln -s "$dotfiles_path/fish" .
+ln -s "$dotfiles_path/nvim" .
+ln -s "$dotfiles_path/i3" .
+ln -s "$dotfiles_path/alacritty" .
+ln -s "$dotfiles_path/rofi" .
+ln -s "$dotfiles_path/tmux" .
+ln -s "$dotfiles_path/picom" .
+# ln -s "$dotfiles_path/eww" .
+# ln -s "$dotfiles_path/wired" .
+# ln -s "$dotfiles_path/polybar" .
+ln -s "$dotfiles_path/dunst" .
+
+# setting up shell
+read -p "generate ssh key [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	echo "Changing default shell to Fish..."
+	fish_path="/usr/bin/fish"
+	echo $fish_path | sudo tee -a /etc/shells
+	chsh -s $fish_path
+fi
+
+# source tmux config
+echo "Applying Tmux configuration..."
+tmux source "$HOME/.config/tmux/tmux.conf"
+# Note: press prefix + I to install packages in tmux
+
+# install eww
+# ./eww/update
+# mv $HOME/.local/bin/eww-copy $HOME/.local/bin/eww
+
+# install wired
+# ./wired/update
+# mv $HOME/.local/bin/wired-copy $HOME/.local/bin/wired
+
+# installing fonts
+echo "Adding Fonts..."
+mkdir -p "$fonts_dir/"
+cp -r ./fonts/* "$fonts_dir/"
+fc-cache
+
+# tlp config
+echo "Copying battery configuration..."
+sudo ln -s $dotfiles_path/tlp/tlp.conf /etc/
+
+# nvim dependencies
+echo "Installing Neovim dependencies..."
+~/.config/nvim/install
+
+# wallpapers
+read -p "Copy wallpapers [y/N]: : " ans
+if [ "$ans" = "y" ]; then
+	cp -r $dotfiles_path/wallpapers $HOME/Pictures/wallpapers
+fi
+
+# enable needed services
+read -p "Enable ACPI (battery status inquiry) [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	sudo systemctl enable acpid.service --now
+fi
+
+# day to day used stuff
+# rpm fusion
+echo "Enabeling RPM repositories..."
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# vscode
+read -p "Install VSCode [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+	sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+	dnf check-update
+	sudo dnf install code
+fi
+
+# vlc 
+read -p "Install VLC [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	sudo dnf install vlc
+fi
+#
+# git setup
+read -p "Setup Git configuration [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	key_path="$HOME/.ssh/github"
+	github_email="marzoukayouness@gmail.com"
+	git config --global user.name merzouka
+	git config --global user.email $github_email
+fi
+read -p "Generate Git SSH key [y/N]: " answer
+if [ "$answer" = "y" ]; then
+ssh-keygen -t ed25519 -C $github_email
+eval "$(ssh-agent -s)"
+ssh-add $key_path
+fi
+
+read -p "Copy SSH configuration [y/N]: " answer
+if [ "$answer" = "y" ]; then
+	ln -s $dotfiles_path/ssh/config ~/.ssh/config
+fi
+
+# fnm (node version manager)
+# look for documentation on installation and configuration in https://github.com/Schniz/fnm?tab=readme-ov-file
+read -p "Install FNM (Node version manager) [y/N]: " ans
+if [ "$ans" = "y" ]; then
+	curl -fsSL https://fnm.vercel.app/install | bash
+fi
+
+tmuxifier
+git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
 fish ~/.config/fish/config.fish
