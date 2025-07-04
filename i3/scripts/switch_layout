@@ -14,6 +14,4 @@ fi
 config="$HOME/.config/eww/keyboard"
 bash "$window" 2>&1 > /dev/null &
 layout=$(swaplayout fr,us,ar) 
-# eww -c $config update selected=$layout
-# eww -c "$HOME/.config/eww/bar" update layout=$layout
 echo m >> $log
