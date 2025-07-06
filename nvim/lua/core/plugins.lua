@@ -16,6 +16,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+    -- Git
+    {
+        'tpope/vim-fugitive',
+        config = function ()
+            vim.keymap.set('n', '<leader>gst', ':Git<CR>', { desc = "Git Status" })
+            vim.keymap.set('n', '<leader>gdf', ':Git difftool<CR>', { desc = "Git Status" })
+        end
+    },
+
     -- neovim json configuration
     {
         'folke/neoconf.nvim',
