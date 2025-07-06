@@ -4,11 +4,6 @@ local servers = {
     pyright = {},
     bashls = {},
     -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-    html = {
-        filetypes = {
-            'html', 'twig', 'hbs',
-        }
-    },
 
     lua_ls = {
         -- cmd = {...},
@@ -67,10 +62,10 @@ vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
 end, { desc = 'Format current buffer with LSP' })
 
-local mason_lspconfig = require('mason-lspconfig')
-
-mason_lspconfig.setup({
-    ensure_installed = vim.tbl_keys(servers or {}),
+require('mason-lspconfig').setup({
+    ensure_installed = {
+        "lua_ls", "bashls", "pyright", "clangd",
+    },
 })
 
 -- set up neodev for lua vim support
