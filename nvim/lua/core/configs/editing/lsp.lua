@@ -3,7 +3,7 @@ function nmap(keys, func, desc)
     if desc then
         desc = 'LSP: ' .. desc
     end
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    vim.keymap.set('n', keys, func, { desc = desc })
 end
 
 -- lsp keybindings 
@@ -23,7 +23,7 @@ nmap('<leader>wl', function ()
 end, '[W]orkspace [L]ist Folders')
 
 -- create a command ':LspFormat' for local lsp formatting
-vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+vim.api.nvim_buf_create_user_command(0, 'Format', function(_)
     vim.lsp.buf.format()
 end, { desc = 'Format current buffer with LSP' })
 
