@@ -47,27 +47,25 @@ function nmap(keys, func, desc)
 end
 
 -- lsp keybindings 
-local on_attach = function (_, bufnr)
-    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-    nmap('gd', vim.lsp.buf.definition, '[G]o [D]efinition')
-    nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-    nmap('gr', require('telescope.builtin').lsp_references, '[G]o [R]eference')
-    nmap('gi', require('telescope.builtin').lsp_implementations, '[G]o [I]mplementation')
-    nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+nmap('gd', vim.lsp.buf.definition, '[G]o [D]efinition')
+nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+nmap('gr', require('telescope.builtin').lsp_references, '[G]o [R]eference')
+nmap('gi', require('telescope.builtin').lsp_implementations, '[G]o [I]mplementation')
+nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-    nmap('<leader>do', vim.lsp.buf.signature_help, '[D]ocumentation [O]pen')
+nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+nmap('<leader>do', vim.lsp.buf.signature_help, '[D]ocumentation [O]pen')
 
-    nmap('<leader>wl', function ()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, '[W]orkspace [L]ist Folders')
+nmap('<leader>wl', function ()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+end, '[W]orkspace [L]ist Folders')
 
-    -- create a command ':LspFormat' for local lsp formatting
-    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        vim.lsp.buf.format()
-    end, { desc = 'Format current buffer with LSP' })
-end
+-- create a command ':LspFormat' for local lsp formatting
+vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format()
+end, { desc = 'Format current buffer with LSP' })
 
 -- extra lsp capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()

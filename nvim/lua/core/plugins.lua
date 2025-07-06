@@ -47,18 +47,19 @@ require('lazy').setup({
 
     -- lsp stuff
     {
+        "mason-org/mason-lspconfig.nvim",
+        opts = {},
+        dependencies = {
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
+        },
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
-            { 'williamboman/mason-lspconfig.nvim' },
             'folke/neodev.nvim', -- add vim api functionality to lua_la
             {
-                'williamboman/mason.nvim',
-                config = true, -- use default config
-            },
-            {
                 'j-hui/fidget.nvim',
-                tag = 'legacy',
-                opts = {}, -- call require('fidget')
             },
         },
     },
