@@ -49,7 +49,7 @@ require('lazy').setup({
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            { 'williamboman/mason-lspconfig.nvim', version = '1.*', },
+            { 'williamboman/mason-lspconfig.nvim' },
             'folke/neodev.nvim', -- add vim api functionality to lua_la
             {
                 'williamboman/mason.nvim',
