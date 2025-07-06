@@ -185,7 +185,6 @@ require('lazy').setup({
     "christoomey/vim-tmux-navigator",
 
     -- visual
-    -- 'norcalli/nvim-colorizer.lua',
     {
         'rrethy/vim-hexokinase',
         build = "make hexokinase"
@@ -201,10 +200,5 @@ require('lazy').setup({
     -- formatting
     'mhartington/formatter.nvim',
 
-    -- -- laravel/blade
-    -- {
-    --     'jwalton512/vim-blade',
-    -- }
-    --
 }, {})
 
