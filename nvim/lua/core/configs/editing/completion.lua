@@ -18,22 +18,26 @@ cmp.setup {
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete {},
+        ['<C-Space>'] = cmp.mapping.complete {
+            config = {
+                sources = {
+                    { name = 'vsnip' }
+                }
+            }
+        },
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             -- select first item if none selected
             select = true,
         },
-        ['<Tab>'] = cmp.mapping(function(fallback)
+        ['<Tab>'] = function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-                luasnip.expand_or_jump()
             else
                 fallback()
             end
-        end, { 'i', 's' }),
+        end
     },
     sources = cmp.config.sources(
         {
@@ -43,20 +47,12 @@ cmp.setup {
         {
             {
                 name = 'buffer',
-                get_bufnrs = function()
-                    local buf = vim.api.nvim_get_current_buf()
-                    local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
-                    if byte_size > 1024 * 1024 then -- 1 Megabyte max
-                        return {}
-                    end
-                    return { buf }
-                end
+                option = {
+                    get_bufnrs = function() return { vim.api.nvim_get_current_buf() } end
+                }
             },
             { name = 'path' },
         }
     ),
-    view = {
-        docs = true
-    }
 }
 

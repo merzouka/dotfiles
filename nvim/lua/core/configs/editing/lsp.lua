@@ -29,7 +29,7 @@ end, { desc = 'Format current buffer with LSP' })
 
 require('mason-lspconfig').setup({
     ensure_installed = {
-        "lua_ls", "bashls", "pyright", "clangd",
+        "lua_ls", "bashls", "pyright", "clangd", "ts_ls", "gopls",
     },
 })
 
