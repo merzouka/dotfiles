@@ -37,8 +37,12 @@ require('mason-lspconfig').setup({
 vim.lsp.config("yamlls", {
     settings = {
         yaml = {
+            schemaStore = {
+                enable = false,
+            },
+            validate = false,
             schemas = {
-                ["kubernetes"] = { "k8s-*.{yaml,yml}", --[[ "k8s/**/*.{yaml,yml}"  ]] },
+                kubernetes = { "k8s-*.{yaml,yml}", "k8s/**/*.{yaml,yml}" },
                 ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
                 ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
                 ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {

@@ -25,7 +25,6 @@ require('lazy').setup({
         end,
         dependencies = { 'lewis6991/gitsigns.nvim' },
     },
-
     -- neovim json configuration
     {
         'folke/neoconf.nvim',
