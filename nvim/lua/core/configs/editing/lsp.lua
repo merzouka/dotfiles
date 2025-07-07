@@ -6,19 +6,19 @@ function nmap(keys, func, desc)
     vim.keymap.set('n', keys, func, { desc = desc })
 end
 
--- lsp keybindings 
+-- lsp keybindings
 nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 nmap('gd', vim.lsp.buf.definition, '[G]o [D]efinition')
 nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-nmap('gr', require('telescope.builtin').lsp_references, '[G]o [R]eference')
-nmap('gi', require('telescope.builtin').lsp_implementations, '[G]o [I]mplementation')
+nmap('gr', require('telescope.builtin').lsp_references, '[G]et [R]eference')
+nmap('gi', require('telescope.builtin').lsp_implementations, '[G]et [I]mplementation')
 nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
 nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 nmap('<leader>do', vim.lsp.buf.signature_help, '[D]ocumentation [O]pen')
 
-nmap('<leader>wl', function ()
+nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end, '[W]orkspace [L]ist Folders')
 

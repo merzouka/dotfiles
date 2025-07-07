@@ -22,7 +22,8 @@ require('lazy').setup({
         config = function ()
             vim.keymap.set('n', '<leader>gst', ':Git<CR>', { desc = "Git Status" })
             vim.keymap.set('n', '<leader>gdf', ':Git difftool<CR>', { desc = "Git Status" })
-        end
+        end,
+        dependencies = { 'lewis6991/gitsigns.nvim' },
     },
 
     -- neovim json configuration
