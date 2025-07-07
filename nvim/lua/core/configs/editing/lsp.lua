@@ -29,7 +29,24 @@ end, { desc = 'Format current buffer with LSP' })
 
 require('mason-lspconfig').setup({
     ensure_installed = {
-        "lua_ls", "bashls", "pyright", "clangd", "ts_ls", "gopls",
+        "lua_ls", "bashls", "pyright", "clangd", "ts_ls", "gopls", "yamlls"
+    },
+})
+
+-- YAML Language Server Configuration
+vim.lsp.config("yamlls", {
+    settings = {
+        yaml = {
+            schemas = {
+                ["kubernetes"] = { "k8s-*.{yaml,yml}", --[[ "k8s/**/*.{yaml,yml}"  ]] },
+                ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
+                    "docker-compose*.{yaml,yml}",
+                    "compose*.{yaml,yml}"
+                },
+            },
+        },
     },
 })
 
