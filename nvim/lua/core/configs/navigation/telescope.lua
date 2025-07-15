@@ -9,7 +9,7 @@ end, { desc = '[P]roject [G]rep' })
 vim.keymap.set('n', '<leader>ds', builtin.diagnostics, { desc = '[D]iagnostics [S]earch' })
 vim.keymap.set('n', '<leader>ts', builtin.colorscheme, { desc = '[T]heme [S]earch' })
 vim.keymap.set('n', '<C-t>s', builtin.treesitter, { desc = 'Search Treesitter' })
-vim.keymap.set('n', '<leader>hs', builtin.help_tags, { desc = '[H]elp [S]earch' })
+vim.keymap.set('n', '<leader>ms', builtin.help_tags, { desc = '[M]anual [S]earch' })
 
 -- telescope fzf native
 pcall(require('telescope').load_extension, 'fzf')

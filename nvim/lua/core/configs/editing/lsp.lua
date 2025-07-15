@@ -16,7 +16,7 @@ nmap('gi', require('telescope.builtin').lsp_implementations, '[G]et [I]mplementa
 nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
 nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-nmap('<leader>do', vim.lsp.buf.signature_help, '[D]ocumentation [O]pen')
+nmap('<leader>sh', vim.lsp.buf.signature_help, '[S]igniture [H]elp')
 
 nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
