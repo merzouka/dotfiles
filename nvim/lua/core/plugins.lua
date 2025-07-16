@@ -20,8 +20,8 @@ require('lazy').setup({
     {
         'tpope/vim-fugitive',
         config = function ()
-            vim.keymap.set('n', '<leader>gst', ':Git<CR>', { desc = "Git Status" })
-            vim.keymap.set('n', '<leader>gdf', ':Git difftool<CR>', { desc = "Git Status" })
+            vim.keymap.set('n', '<leader>gs', ':Git<CR>', { desc = "[G]it [S]tatus" })
+            vim.keymap.set('n', '<leader>do', ':Git difftool<CR>', { desc = "[D]ifftool [O]pen" })
         end,
         dependencies = { 'lewis6991/gitsigns.nvim' },
     },
