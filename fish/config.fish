@@ -42,3 +42,9 @@ set -gpx PATH /usr/lib/ccache
 
 # neovim
 set -gax PATH /opt/nvim-linux-x86_64/bin
+
+# Pyenv
+set -Ux PYENV_ROOT $HOME/.pyenv
+test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
+
+pyenv init - fish | source
