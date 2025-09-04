@@ -1,3 +1,4 @@
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
@@ -47,4 +48,15 @@ set -gax PATH /opt/nvim-linux-x86_64/bin
 set -Ux PYENV_ROOT $HOME/.pyenv
 test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
 
-pyenv init - fish | source
+if command -q pyenv
+    pyenv init - fish | source
+end
+
+# neovim
+if test -d '/opt/nvim-linux-arm64/bin'
+    set -gx PATH "/opt/nvim-linux-arm64/bin" $PATH
+end
+
+if test -d '/usr/local/go/bin'
+    set -gx PATH "/usr/local/go/bin" $PATH
+end
