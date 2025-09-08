@@ -1,6 +1,7 @@
 
 if status is-interactive
-    # Commands to run in interactive sessions can go here
+    # ssh
+    eval (ssh-agent -c)
 end
 
 # adding go binaries
@@ -28,8 +29,10 @@ end
 
 # tmuxifier
 set -gx PATH "$HOME/.tmuxifier/bin" $PATH
-eval (tmuxifier init - fish)
 export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux/layouts/"
+if command -q tmuxifier
+    eval (tmuxifier init - fish)
+end
 
 # vimtex
 set -gx VIMTEX_OUTPUT_DIRECTORY './out'
