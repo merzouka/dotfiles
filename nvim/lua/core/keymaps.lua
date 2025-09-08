@@ -34,3 +34,10 @@ vim.keymap.set("v", "/", "<Esc>/\\%V")
 
 -- file browser
 vim.keymap.set({ "n", "i" }, "<C-n>", "<cmd>Explore<CR>")
+
+-- indentation
+vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
+
+-- folding
+vim.keymap.set('n', 'zf', 'vafzc')

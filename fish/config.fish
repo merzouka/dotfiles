@@ -63,3 +63,5 @@ end
 if test -d '/usr/local/go/bin'
     set -gx PATH "/usr/local/go/bin" $PATH
 end
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
