@@ -1,7 +1,5 @@
 
 if status is-interactive
-    # ssh
-    eval (ssh-agent -c)
 end
 
 # adding go binaries
@@ -26,6 +24,9 @@ if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# ssh
+eval (ssh-agent -c) 1> /dev/null
 
 # tmuxifier
 set -gx PATH "$HOME/.tmuxifier/bin" $PATH
