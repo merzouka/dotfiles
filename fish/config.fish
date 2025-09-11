@@ -26,7 +26,9 @@ end
 # pnpm end
 
 # ssh
-eval (ssh-agent -c) 1> /dev/null
+if [ "$SSH_AGENT_PID" = "" ]
+    eval (ssh-agent -c) 1> /dev/null
+end
 
 # tmuxifier
 set -gx PATH "$HOME/.tmuxifier/bin" $PATH
@@ -39,6 +41,7 @@ end
 set -gx VIMTEX_OUTPUT_DIRECTORY './out'
 alias tf='terraform'
 alias k='kubectl'
+alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
 
 # ardupilot
 
