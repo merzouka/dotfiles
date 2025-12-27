@@ -7,7 +7,7 @@ set -gx PATH "$HOME/go/bin/" "$HOME/dotfiles/scripts/" $PATH
 # add binaries installed by pip to path
 set -gx PATH "$HOME/.local/bin" "$HOME/dotfiles/scripts/" $PATH
 # intellij
-set -gx PATH "$HOME/editors/idea-IU-243.23654.153/bin" $PATH
+set -gx PATH "$HOME/editors/idea-IC-252.26830.84/bin" $PATH
 # android cmd-tools
 set -gx PATH "$HOME/Android/Sdk/cmdline-tools/latest/bin" $PATH
 
@@ -41,6 +41,7 @@ end
 set -gx VIMTEX_OUTPUT_DIRECTORY './out'
 alias tf='terraform'
 alias k='kubectl'
+alias d='docker'
 alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
 
 # ardupilot
