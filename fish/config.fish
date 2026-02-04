@@ -3,7 +3,7 @@ if status is-interactive
 end
 
 # adding go binaries
-set -gx PATH "$HOME/go/bin/" "$HOME/dotfiles/scripts/" $PATH
+set -gx PATH "/usr/local/go/bin" "$HOME/go/bin/" "$HOME/dotfiles/scripts/" $PATH
 # add binaries installed by pip to path
 set -gx PATH "$HOME/.local/bin" "$HOME/dotfiles/scripts/" $PATH
 # intellij
