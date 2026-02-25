@@ -57,7 +57,11 @@ require('lazy').setup({
     -- lsp stuff
     {
         "mason-org/mason-lspconfig.nvim",
-        opts = {},
+        opts = {
+            automatic_enable = {
+                exclude = { "rust_analyzer" }
+            },
+        },
         dependencies = {
             { "mason-org/mason.nvim", opts = {} },
             "neovim/nvim-lspconfig",
