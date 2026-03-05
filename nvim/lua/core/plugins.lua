@@ -145,6 +145,7 @@ require('lazy').setup({
         dependencies = {
             'nvim-treesitter/nvim-treesitter-textobjects',
         },
+        branch = 'master',
         build = ':TSUpdate',
     },
 
@@ -206,6 +207,23 @@ require('lazy').setup({
     {
         'stevearc/dressing.nvim',
         opts = {},
+    },
+
+    -- AI
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+    },
+    {
+        "CopilotC-Nvim/CopilotChat.nvim",
+        dependencies = {
+            { "nvim-lua/plenary.nvim", branch = "master" },
+        },
+        build = "make tiktoken",
+        opts = {
+            -- See Configuration section for options
+        },
     },
 
     -- linting
