@@ -1,4 +1,4 @@
 - Zotero: Research
-- Motrix: Downloader
-- OBS: Recording
-- QbitTorrent
+- Motrix: Downloader -> net.agalwood.Motrix
+- OBS: Recording -> com.obsproject.Studio
+- Zen -> app.zen_browser.zen
