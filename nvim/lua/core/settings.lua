@@ -2,6 +2,9 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- right split: ---------------------------------------------------------------
+vim.o.splitright = true
+
 -- tabs: ----------------------------------------------------------------------
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
