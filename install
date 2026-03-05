@@ -124,7 +124,7 @@ install_packages() {
         'xclip' 'ripgrep' 'power-profiles-daemon' 'picom' 'acpi'
         'wireplumber' 'alsa-utils' 'glib2' 'acpid' 'bluez' 'bluez-tools' 'brightnessctl'
         # Window manager
-        'i3' 'i3status' 'i3lock' 'xbacklight' 'feh' 'i3blocks' 'xorg-x11-server-Xorg'
+        'i3' 'i3status' 'i3lock' 'xbacklight' 'feh' 'i3blocks'
         # Shell
         'fish'
         # Utilities
