@@ -211,11 +211,6 @@ require('lazy').setup({
 
     -- AI
     {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-    },
-    {
         "CopilotC-Nvim/CopilotChat.nvim",
         dependencies = {
             { "nvim-lua/plenary.nvim", branch = "master" },
