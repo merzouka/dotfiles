@@ -120,16 +120,16 @@ install_packages() {
     
     local dependencies=(
         # General dependencies
-        'git' 'gcc' 'neovim' 'npm' 'lxappearance' 'numlockx' 'maim' 'pipewire' 
-        'xclip' 'ripgrep' 'powerprofilesctl' 'picom' 'acpi' 'wpctl' 'amixer' 
-        'glib' 'acpid' 'bluez' 'bluez-tools' 'brightnessctl'
+        'git' 'gcc' 'neovim' 'npm' 'lxappearance' 'numlockx' 'maim'
+        'xclip' 'ripgrep' 'power-profiles-daemon' 'picom' 'acpi'
+        'wireplumber' 'alsa-utils' 'glib2' 'acpid' 'bluez' 'bluez-tools' 'brightnessctl'
         # Window manager
         'i3' 'i3status' 'i3lock' 'xbacklight' 'feh' 'i3blocks'
         # Shell
         'fish'
         # Utilities
-        'pavucontrol' 'blueman' 'tlp' 'xrandr' 'arandr' 'rofi' 'tmux'
-        'alacritty' 'pass' 'gpg' 'zoxide'
+        'pavucontrol' 'blueman' 'xorg-x11-server-utils' 'arandr' 'rofi' 'tmux'
+        'alacritty' 'pass' 'zoxide'
     )
     
     local packages_to_install=()
@@ -218,6 +218,47 @@ install_additional_software() {
     fi
 }
 
+# Install Flatpak applications
+install_flatpak_apps() {
+    if prompt_user "Install Flatpak applications (Motrix, OBS Studio, Zen Browser)"; then
+        log_info "Setting up Flatpak..."
+
+        # Ensure Flatpak is installed
+        if ! command_exists flatpak; then
+            log_info "Installing Flatpak..."
+            sudo dnf install -y flatpak || handle_error "Failed to install Flatpak"
+            log_success "Flatpak installed"
+        fi
+
+        # Add Flathub remote (default, use --if-not-exists to be safe)
+        log_info "Adding Flathub remote..."
+        flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
+            || handle_error "Failed to add Flathub remote"
+        log_success "Flathub remote configured"
+
+        local flatpak_apps=(
+            "net.agalwood.Motrix"     # Download manager
+            "com.obsproject.Studio"   # Screen recording & streaming
+            "app.zen_browser.zen"     # Zen Browser
+        )
+
+        for app_id in "${flatpak_apps[@]}"; do
+            local app_name
+            app_name=$(echo "$app_id" | awk -F'.' '{print $NF}')
+            log_info "Installing $app_name ($app_id)..."
+            if flatpak info --user "$app_id" &>/dev/null; then
+                log_success "$app_name is already installed"
+            else
+                if flatpak install --user --noninteractive flathub "$app_id"; then
+                    log_success "$app_name installed successfully"
+                else
+                    log_warning "Failed to install $app_name ($app_id) - skipping"
+                fi
+            fi
+        done
+    fi
+}
+
 # Copy configuration files
 copy_configurations() {
     if prompt_user "Copy configuration files (Fish, Neovim, i3, Alacritty, Rofi, Tmux, Picom, Dunst)"; then
@@ -225,18 +266,24 @@ copy_configurations() {
         
         cd "$HOME/.config" || handle_error "Failed to change to .config directory"
         
-        local configs=("fish" "nvim" "i3" "alacritty" "rofi" "tmux" "picom" "dunst" "i3blocks")
+        local configs=("nvim" "i3" "alacritty" "rofi" "tmux" "picom" "dunst" "i3blocks")
         
         for config in "${configs[@]}"; do
-            if [[ -d "$DOTFILES_PATH/$config" ]]; then
-                if [[ ! -L "$config" ]]; then
-                    ln -s "$DOTFILES_PATH/$config" . || handle_error "Failed to link $config"
-                    log_success "Linked $config configuration"
-                else
-                    log_success "$config already linked"
-                fi
+            if [[ ! -d "$DOTFILES_PATH/$config" ]]; then
+                log_warning "$config directory not found in dotfiles — skipping"
+                continue
+            fi
+
+            if [[ -L "$config" ]]; then
+                log_success "$config already symlinked — skipping"
+            elif [[ -d "$config" ]]; then
+                log_warning "$config exists as a real directory — removing and replacing with symlink"
+                rm -rf "$config" || handle_error "Failed to remove existing $config directory"
+                ln -s "$DOTFILES_PATH/$config" . || handle_error "Failed to link $config"
+                log_success "Replaced $config directory with symlink"
             else
-                log_warning "$config directory not found in dotfiles"
+                ln -s "$DOTFILES_PATH/$config" . || handle_error "Failed to link $config"
+                log_success "Linked $config configuration"
             fi
         done
     fi
@@ -281,17 +328,6 @@ apply_configurations() {
             log_success "Fonts installed and cache updated"
         else
             log_warning "Fonts directory not found in dotfiles"
-        fi
-    fi
-    
-    # Copy TLP configuration
-    if prompt_user "Copy battery configuration (TLP)"; then
-        log_info "Copying TLP configuration..."
-        if [[ -f "$DOTFILES_PATH/tlp/tlp.conf" ]]; then
-            sudo ln -sf "$DOTFILES_PATH/tlp/tlp.conf" /etc/ || handle_error "Failed to link TLP config"
-            log_success "TLP configuration linked"
-        else
-            log_warning "TLP config not found in dotfiles"
         fi
     fi
     
@@ -436,6 +472,7 @@ main() {
     setup_scripts
     install_packages
     install_additional_software
+    install_flatpak_apps
     copy_configurations
     configure_shell
     apply_configurations
