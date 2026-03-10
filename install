@@ -216,6 +216,40 @@ install_additional_software() {
             log_success "Tmuxifier already installed"
         fi
     fi
+
+    if prompt_user "Install Docker"; then
+        log_info "Installing Docker..."
+        if ! command_exists docker; then
+            sudo dnf config-manager addrepo \
+                --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo && \
+                sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
+                sudo systemctl enable --now docker && \
+                sudo usermod -aG docker "$USER" || \
+                handle_error "Failed to install Docker"
+            log_success "Docker installed"
+        else
+            log_success "Docker already installed"
+        fi
+    fi
+
+    if prompt_user "Install Kubectl"; then
+        log_info "Installing Kubectl..."
+        if ! command_exists kubectl; then
+            cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+            [kubernetes]
+            name=Kubernetes
+            baseurl=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/
+            enabled=1
+            gpgcheck=1
+            gpgkey=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/repodata/repomd.xml.key
+            EOF
+            sudo dnf install -y kubectl || \
+                handle_error "Failed to install Kubectl"
+            log_success "Kubectl installed"
+        else
+            log_success "Kubectl already installed"
+        fi
+    fi
 }
 
 # Install Flatpak applications
