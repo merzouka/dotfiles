@@ -70,3 +70,12 @@ if test -d '/usr/local/go/bin'
 end
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# opencode providers
+set keys_file "$HOME/.config/opencode/.api-keys"
+if test -e $keys_file
+    set -gx GEMINI_API_KEY $(cat $keys_file | grep -i 'gemini' | grep '*' | tr -d '*' | sed 's/GEMINI=//')
+end
+
+# opencode
+fish_add_path /home/merzouka/.opencode/bin
