@@ -274,7 +274,8 @@ install_flatpak_apps() {
             "net.agalwood.Motrix"     # Download manager
             "com.obsproject.Studio"   # Screen recording & streaming
             "app.zen_browser.zen"     # Zen Browser
-            "com.google.Chrome",
+            "com.google.Chrome",      # Chrome Browser
+            "com.discordapp.Discord", # Discord
         )
 
         for app_id in "${flatpak_apps[@]}"; do

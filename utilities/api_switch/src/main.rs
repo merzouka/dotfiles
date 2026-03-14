@@ -75,7 +75,7 @@ fn main() {
     let mut writer = BufWriter::new(file);
     for (prov, keys) in keys {
         for key in keys {
-            match writeln!(writer, "{prov}={}{}", key.value, if key.selected { "*" } else { "" }) {
+            match writeln!(writer, "{}={}{}", prov.to_uppercase(), key.value, if key.selected { "*" } else { "" }) {
                 Ok(_) => if prov == provider.as_str() && key.selected {
                     println!("Switched API keys for provider {provider} successfully");
                 }

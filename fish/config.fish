@@ -74,7 +74,7 @@ set --export PATH $BUN_INSTALL/bin $PATH
 # opencode providers
 set keys_file "$HOME/.config/opencode/.api-keys"
 if test -e $keys_file
-    set -gx GEMINI_API_KEY $(cat $keys_file | grep -i 'gemini' | grep '*' | tr -d '*' | sed 's/GEMINI=//')
+    set -gx GOOGLE_GENERATIVE_AI_API_KEY $(cat $keys_file | grep -i 'gemini' | grep '*' | tr -d '*' | sed 's/GEMINI=//')
 end
 
 # opencode
