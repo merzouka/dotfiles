@@ -1,82 +1,92 @@
-
 if status is-interactive
+    # interactive-only config goes here (e.g. key bindings, prompt)
 end
 
-# adding go binaries
-set -gx PATH "/usr/local/go/bin" "$HOME/go/bin/" "$HOME/dotfiles/scripts/" $PATH
-# add binaries installed by pip to path
-set -gx PATH "$HOME/.local/bin" "$HOME/dotfiles/scripts/" $PATH
+# go
+if test -d '/usr/local/go/bin'
+    fish_add_path /usr/local/go/bin
+end
+fish_add_path $HOME/go/bin
+fish_add_path $HOME/dotfiles/scripts
+
+# pip binaries
+fish_add_path $HOME/.local/bin
+
 # intellij
-set -gx PATH "$HOME/editors/idea-IC-252.26830.84/bin" $PATH
+fish_add_path $HOME/editors/idea-IC-252.26830.84/bin
+
 # android cmd-tools
-set -gx PATH "$HOME/Android/Sdk/cmdline-tools/latest/bin" $PATH
+fish_add_path $HOME/Android/Sdk/cmdline-tools/latest/bin
 
-# zoxide
-zoxide init fish | source
-alias cd=z
+# neovim (x86)
+fish_add_path /opt/nvim-linux-x86_64/bin
 
-# set up nvim as editor
-set -gx EDITOR nvim
+# neovim (arm64 — only if present)
+if test -d '/opt/nvim-linux-arm64/bin'
+    fish_add_path /opt/nvim-linux-arm64/bin
+end
+
+# ardupilot / ccache
+fish_add_path $HOME/code/projects/drone/load/sim/ardupilot/Tools/autotest
+fish_add_path /usr/lib/ccache
+
+# tmuxifier
+fish_add_path $HOME/.tmuxifier/bin
 
 # pnpm
-set -gx PNPM_HOME "/home/merzouka/.local/share/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
+set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+fish_add_path $PNPM_HOME
 
-# ssh
-if [ "$SSH_AGENT_PID" = "" ]
-    eval (ssh-agent -c) 1> /dev/null
+# bun
+set -gx BUN_INSTALL "$HOME/.bun"
+fish_add_path $BUN_INSTALL/bin
+
+# opencode
+fish_add_path $HOME/.opencode/bin
+
+# environment
+set -gx EDITOR nvim
+set -gx VIMTEX_OUTPUT_DIRECTORY './out'
+set -gx TMUXIFIER_LAYOUT_PATH "$HOME/.config/tmux/layouts/"
+
+# aliases
+alias vim=nvim
+alias tf=terraform
+alias k=kubectl
+alias d=docker
+alias cd=z
+
+function kcd
+    kubectl config set-context (kubectl config current-context) --namespace $argv
+end
+
+# zoxide
+if command -q zoxide
+    zoxide init fish | source
+else
+    echo "Zoxide is missing..."
 end
 
 # tmuxifier
-set -gx PATH "$HOME/.tmuxifier/bin" $PATH
-export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux/layouts/"
 if command -q tmuxifier
-    eval (tmuxifier init - fish)
+    tmuxifier init - fish | source
 end
 
-# vimtex
-set -gx VIMTEX_OUTPUT_DIRECTORY './out'
-alias tf='terraform'
-alias k='kubectl'
-alias d='docker'
-alias kcd='kubectl config set-context $(kubectl config current-context) --namespace'
-
-# ardupilot
-
-set -gax PATH $HOME/code/projects/drone/load/sim/ardupilot/Tools/autotest
-set -gpx PATH /usr/lib/ccache
-
-# neovim
-set -gax PATH /opt/nvim-linux-x86_64/bin
-
-# Pyenv
+# pyenv
 set -Ux PYENV_ROOT $HOME/.pyenv
-test -d $PYENV_ROOT/bin; and fish_add_path $PYENV_ROOT/bin
-
+fish_add_path $PYENV_ROOT/bin
 if command -q pyenv
     pyenv init - fish | source
 end
 
-# neovim
-alias vim=nvim
-if test -d '/opt/nvim-linux-arm64/bin'
-    set -gx PATH "/opt/nvim-linux-arm64/bin" $PATH
+# ssh agent
+if test -z "$SSH_AGENT_PID"
+    eval (ssh-agent -c) 1> /dev/null
 end
 
-if test -d '/usr/local/go/bin'
-    set -gx PATH "/usr/local/go/bin" $PATH
-end
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH
-
-# opencode providers
+# api keys
 set keys_file "$HOME/.config/opencode/.api-keys"
 if test -e $keys_file
-    set -gx GOOGLE_GENERATIVE_AI_API_KEY $(cat $keys_file | grep -i 'gemini' | grep '*' | tr -d '*' | sed 's/GEMINI=//')
+    set -gx GOOGLE_GENERATIVE_AI_API_KEY \
+        (grep -i 'GEMINI=' $keys_file | sed 's/.*GEMINI=//')
 end
-
-# opencode
-fish_add_path /home/merzouka/.opencode/bin
