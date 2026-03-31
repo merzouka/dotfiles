@@ -61,6 +61,7 @@ if command -q pyenv
 end
 
 # neovim
+alias vim=nvim
 if test -d '/opt/nvim-linux-arm64/bin'
     set -gx PATH "/opt/nvim-linux-arm64/bin" $PATH
 end
