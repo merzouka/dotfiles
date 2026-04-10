@@ -438,6 +438,48 @@ install_optional_apps() {
     fi
 }
 
+# Setup phone as camera
+install_phone_camera() {
+    if prompt_user "Setup phone as webcam via USB (scrcpy + v4l2loopback)"; then
+        log_info "Setting up phone camera streaming..."
+
+        # Install v4l2loopback and android tools
+        log_info "Installing v4l2loopback and android-tools..."
+        sudo dnf install -y v4l2loopback android-tools v4l-utils \
+            || handle_error "Failed to install v4l2loopback / android-tools"
+        log_success "v4l2loopback and android-tools installed"
+
+        # Install scrcpy via COPR
+        log_info "Installing scrcpy via COPR..."
+        if ! command_exists scrcpy; then
+            sudo dnf copr enable -y zeno/scrcpy \
+                || handle_error "Failed to enable scrcpy COPR"
+            sudo dnf install -y scrcpy \
+                || handle_error "Failed to install scrcpy"
+            log_success "scrcpy installed"
+        else
+            log_success "scrcpy already installed"
+        fi
+
+        # Persist v4l2loopback module across reboots
+        log_info "Configuring v4l2loopback to load on boot..."
+        echo "v4l2loopback" | sudo tee /etc/modules-load.d/v4l2loopback.conf > /dev/null \
+            || handle_error "Failed to write modules-load config"
+        echo "options v4l2loopback exclusive_caps=1 card_label=PhoneCam" \
+            | sudo tee /etc/modprobe.d/v4l2loopback.conf > /dev/null \
+            || handle_error "Failed to write modprobe config"
+
+        # Load it now without requiring a reboot
+        sudo modprobe v4l2loopback exclusive_caps=1 card_label=PhoneCam \
+            || handle_error "Failed to load v4l2loopback module"
+
+        log_success "v4l2loopback configured and loaded"
+        log_info "Phone camera setup complete."
+        log_info "To stream: connect your phone via USB, enable USB debugging, then run 'phonestrm' (add the Fish function manually from your dotfiles)."
+        log_info "Use 'v4l2-ctl --list-devices' to find your /dev/videoN loopback device."
+    fi
+}
+
 # Configure Git
 configure_git() {
     if prompt_user "Setup Git configuration"; then
@@ -515,6 +557,7 @@ main() {
     enable_services
     setup_repositories
     install_optional_apps
+    install_phone_camera
     configure_git
     
     echo -e "\n${GREEN}╔══════════════════════════════════════════════════════════════╗${NC}"
