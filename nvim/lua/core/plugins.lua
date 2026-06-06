@@ -145,6 +145,20 @@ require('lazy').setup({
         branch = 'master',
     },
     {
+        "nvim-treesitter/nvim-treesitter-context",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        event = "BufReadPost",
+        opts = {
+            enable = true,
+            max_lines = 3,          -- how many context lines to show (0 = no limit)
+            min_window_height = 0,
+            mode = "cursor",        -- or "topline"
+            multiline_threshold = 20,
+            trim_scope = "outer",
+            zindex = 20,
+        },
+    },
+    {
         'nvim-treesitter/nvim-treesitter',
         branch = 'master',
         build = ':TSUpdate',
