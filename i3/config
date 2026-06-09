@@ -86,6 +86,9 @@ bar {
     # separator_symbol " "
 }
 
+# Never dim screen or turn off display
+exec --no-startup-id xset s off -dpms
+
 # bar {
 #     status_command SCRIPT_DIR=~/.config/i3blocks/custom i3blocks
 #     separator_symbol " "
