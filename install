@@ -235,14 +235,14 @@ install_additional_software() {
     if prompt_user "Install Kubectl"; then
         log_info "Installing Kubectl..."
         if ! command_exists kubectl; then
-            cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
-            [kubernetes]
-            name=Kubernetes
-            baseurl=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/
-            enabled=1
-            gpgcheck=1
-            gpgkey=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/repodata/repomd.xml.key
-            EOF
+            cat <<-EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+			[kubernetes]
+			name=Kubernetes
+			baseurl=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/
+			enabled=1
+			gpgcheck=1
+			gpgkey=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/repodata/repomd.xml.key
+			EOF
             sudo dnf install -y kubectl || \
                 handle_error "Failed to install Kubectl"
             log_success "Kubectl installed"
@@ -273,9 +273,9 @@ install_flatpak_apps() {
         local flatpak_apps=(
             "net.agalwood.Motrix"     # Download manager
             "com.obsproject.Studio"   # Screen recording & streaming
-            "app.zen_browser.zen"     # Zen Browser
-            "com.google.Chrome",      # Chrome Browser
-            "com.discordapp.Discord", # Discord
+            "com.vivaldi.Vivaldi"     # Vivaldi Browser
+            "com.google.Chrome"       # Chrome Browser
+            "com.discordapp.Discord"  # Discord
         )
 
         for app_id in "${flatpak_apps[@]}"; do
@@ -293,6 +293,7 @@ install_flatpak_apps() {
             fi
         done
     fi
+    flatpak override --user com.vivaldi.Vivaldi --env=VIVALDI_USER_FLAGS="--password-store=basic"
 }
 
 # Copy configuration files
@@ -443,11 +444,29 @@ install_phone_camera() {
     if prompt_user "Setup phone as webcam via USB (scrcpy + v4l2loopback)"; then
         log_info "Setting up phone camera streaming..."
 
+        # Install kernel headers + DKMS so v4l2loopback can build for your kernel
+        log_info "Installing kernel headers and DKMS..."
+        sudo dnf install -y kernel-devel kernel-headers dkms \
+            || handle_error "Failed to install kernel headers / dkms"
+
         # Install v4l2loopback and android tools
         log_info "Installing v4l2loopback and android-tools..."
         sudo dnf install -y v4l2loopback android-tools v4l-utils \
             || handle_error "Failed to install v4l2loopback / android-tools"
-        log_success "v4l2loopback and android-tools installed"
+
+        # Build the module for the running kernel via DKMS (if not already done)
+        if ! sudo dkms status v4l2loopback 2>/dev/null | grep -q "installed"; then
+            log_info "Building v4l2loopback for current kernel via DKMS..."
+            local v4l2_ver
+            v4l2_ver=$(sudo dkms status v4l2loopback 2>/dev/null | awk -F'[,: ]+' '{print $2}' | head -1)
+            if [[ -n "$v4l2_ver" ]]; then
+                sudo dkms build -m v4l2loopback -v "$v4l2_ver" \
+                    && sudo dkms install -m v4l2loopback -v "$v4l2_ver" \
+                    || handle_error "DKMS build/install of v4l2loopback failed"
+            else
+                log_warning "Could not determine v4l2loopback version for DKMS — trying modprobe anyway"
+            fi
+        fi
 
         # Install scrcpy via COPR
         log_info "Installing scrcpy via COPR..."
@@ -475,10 +494,11 @@ install_phone_camera() {
 
         log_success "v4l2loopback configured and loaded"
         log_info "Phone camera setup complete."
-        log_info "To stream: connect your phone via USB, enable USB debugging, then run 'phonestrm' (add the Fish function manually from your dotfiles)."
+        log_info "To stream: connect your phone via USB, enable USB debugging, then run 'phonestrm'."
         log_info "Use 'v4l2-ctl --list-devices' to find your /dev/videoN loopback device."
     fi
 }
+
 
 # Configure Git
 configure_git() {
