@@ -71,6 +71,71 @@ is_package_installed() {
     dnf list installed "$1" 2>/dev/null | grep -q 'Installed'
 }
 
+install_dlink_ax300_driver() {
+    if prompt_user "Install driver for D-Link AX300 Nano USB Wi-Fi Adapter (AICSemi AIC8800)"; then
+        log_info "Installing D-Link AX300 driver..."
+
+        # === Security / Dual Boot Warnings ===
+        echo -e "\n${YELLOW}⚠️  IMPORTANT NOTES BEFORE CONTINUING ⚠️${NC}"
+        echo -e "${YELLOW}• If Secure Boot is enabled, the driver will NOT load (Key rejected).${NC}"
+        echo -e "${YELLOW}• Recommended: Disable Secure Boot in your BIOS/UEFI.${NC}"
+        echo -e "${YELLOW}• If you are dual booting with Windows and have BitLocker enabled,${NC}"
+        echo -e "${YELLOW}  disable BitLocker first in Windows to avoid recovery key prompts.${NC}"
+        echo -e "${YELLOW}• You can re-enable both later if desired.${NC}\n"
+
+        if ! prompt_user "I have read the warnings above and wish to continue"; then
+            log_warning "Driver installation skipped by user."
+            return 0
+        fi
+
+        sudo dnf install -y dkms kernel-devel kernel-headers git || handle_error "Failed to install build dependencies"
+
+        local driver_dir="$HOME/aic8800dc-linux-patched"
+
+        if [[ ! -d "$driver_dir" ]]; then
+            log_info "Cloning driver repository..."
+            git clone https://github.com/Kiborgik/aic8800dc-linux-patched.git "$driver_dir" \
+                || handle_error "Failed to clone driver repo"
+        else
+            log_info "Driver directory already exists, updating..."
+            cd "$driver_dir" && git pull || log_warning "Could not update repo"
+        fi
+
+        cd "$driver_dir"
+
+        # Make scripts executable
+        log_info "Making scripts executable..."
+        chmod +x *.sh || log_warning "Failed to chmod scripts"
+
+        # Run installer
+        log_info "Running installer..."
+        sudo ./install.sh || handle_error "Driver installation failed"
+
+        # Run test script
+        log_info "Running test script to verify driver..."
+        echo -e "${YELLOW}Note: Plug in your D-Link AX300 adapter now if not already plugged.${NC}"
+        sudo ./test.sh || log_warning "Test script completed with warnings (this is common)"
+
+        # Auto-load modules on boot
+        log_info "Setting up automatic module loading on boot..."
+        echo "aic_load_fw" | sudo tee /etc/modules-load.d/aic8800.conf > /dev/null
+        echo "aic8800_fdrv" | sudo tee -a /etc/modules-load.d/aic8800.conf > /dev/null
+
+        log_success "D-Link AX300 driver installed and configured for auto-loading"
+
+        # Optional cleanup
+        if prompt_user "Cleanup temporary files? (keeps repo for future updates)"; then
+            log_info "Cleaning up..."
+            git clean -fdx --exclude=".git" --exclude="blobs" 2>/dev/null || true
+            log_success "Cleanup completed"
+        fi
+
+        log_info "✅ D-Link AX300 setup finished."
+        log_info "Please reboot your system now."
+        log_info "After reboot, the adapter should load automatically when plugged in."
+    fi
+}
+
 # Create necessary directories
 setup_directories() {
     log_info "Setting up directories..."
@@ -293,7 +358,6 @@ install_flatpak_apps() {
             fi
         done
     fi
-    flatpak override --user com.vivaldi.Vivaldi --env=VIVALDI_USER_FLAGS="--password-store=basic"
 }
 
 # Copy configuration files
@@ -444,29 +508,11 @@ install_phone_camera() {
     if prompt_user "Setup phone as webcam via USB (scrcpy + v4l2loopback)"; then
         log_info "Setting up phone camera streaming..."
 
-        # Install kernel headers + DKMS so v4l2loopback can build for your kernel
-        log_info "Installing kernel headers and DKMS..."
-        sudo dnf install -y kernel-devel kernel-headers dkms \
-            || handle_error "Failed to install kernel headers / dkms"
-
         # Install v4l2loopback and android tools
         log_info "Installing v4l2loopback and android-tools..."
         sudo dnf install -y v4l2loopback android-tools v4l-utils \
             || handle_error "Failed to install v4l2loopback / android-tools"
-
-        # Build the module for the running kernel via DKMS (if not already done)
-        if ! sudo dkms status v4l2loopback 2>/dev/null | grep -q "installed"; then
-            log_info "Building v4l2loopback for current kernel via DKMS..."
-            local v4l2_ver
-            v4l2_ver=$(sudo dkms status v4l2loopback 2>/dev/null | awk -F'[,: ]+' '{print $2}' | head -1)
-            if [[ -n "$v4l2_ver" ]]; then
-                sudo dkms build -m v4l2loopback -v "$v4l2_ver" \
-                    && sudo dkms install -m v4l2loopback -v "$v4l2_ver" \
-                    || handle_error "DKMS build/install of v4l2loopback failed"
-            else
-                log_warning "Could not determine v4l2loopback version for DKMS — trying modprobe anyway"
-            fi
-        fi
+        log_success "v4l2loopback and android-tools installed"
 
         # Install scrcpy via COPR
         log_info "Installing scrcpy via COPR..."
@@ -494,11 +540,10 @@ install_phone_camera() {
 
         log_success "v4l2loopback configured and loaded"
         log_info "Phone camera setup complete."
-        log_info "To stream: connect your phone via USB, enable USB debugging, then run 'phonestrm'."
+        log_info "To stream: connect your phone via USB, enable USB debugging, then run 'phonestrm' (add the Fish function manually from your dotfiles)."
         log_info "Use 'v4l2-ctl --list-devices' to find your /dev/videoN loopback device."
     fi
 }
-
 
 # Configure Git
 configure_git() {
@@ -568,6 +613,10 @@ main() {
     setup_directories
     update_grub
     setup_scripts
+
+    # Add driver installation here
+    install_dlink_ax300_driver
+
     install_packages
     install_additional_software
     install_flatpak_apps
