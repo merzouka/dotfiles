@@ -195,6 +195,8 @@ install_packages() {
         # Utilities
         'pavucontrol' 'blueman' 'xorg-x11-server-utils' 'arandr' 'rofi' 'tmux'
         'alacritty' 'pass' 'zoxide'
+        # For controlling i3 sleep and turn off
+        'xset'
     )
     
     local packages_to_install=()
@@ -357,6 +359,9 @@ install_flatpak_apps() {
                 fi
             fi
         done
+
+        # Vivaldi logout fix
+        flatpak override --user com.vivaldi.Vivaldi --env=VIVALDI_USER_FLAGS="--password-store=basic"
     fi
 }
 
