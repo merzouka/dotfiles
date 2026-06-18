@@ -56,21 +56,21 @@ require('lazy').setup({
 
     -- lsp stuff
     {
-        "mason-org/mason-lspconfig.nvim",
+        "williamboman/mason-lspconfig.nvim", -- FIX: Corrected organization name
         opts = {
             automatic_enable = {
                 exclude = { "rust_analyzer" }
             },
         },
         dependencies = {
-            { "mason-org/mason.nvim", opts = {} },
+            { "williamboman/mason.nvim", opts = {} }, -- FIX: Corrected organization name
             "neovim/nvim-lspconfig",
         },
     },
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            'folke/neodev.nvim', -- add vim api functionality to lua_la
+            'folke/neodev.nvim',
             {
                 'j-hui/fidget.nvim',
             },
@@ -94,7 +94,6 @@ require('lazy').setup({
             -- other completion
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
-            -- 'hrsh7th/cmp-cmdline',
         },
     },
 
@@ -124,11 +123,10 @@ require('lazy').setup({
     -- Fuzzy Finder
     {
         'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
+        branch = 'master', -- FIX: Tracks master to support the modernized Treesitter API
         dependencies = {
             'nvim-lua/plenary.nvim',
             {
-                -- only runs if make is installed
                 'nvim-telescope/telescope-fzf-native.nvim',
                 build = 'make',
                 cond = function ()
@@ -139,10 +137,10 @@ require('lazy').setup({
     },
 
     -- editing
-    --      treesitter
+    --       treesitter
     {
         'nvim-treesitter/nvim-treesitter-textobjects',
-        branch = 'master',
+        branch = 'main', -- FIX: Main branch tracks the modernized api architecture
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
@@ -160,11 +158,11 @@ require('lazy').setup({
     },
     {
         'nvim-treesitter/nvim-treesitter',
-        branch = 'master',
+        branch = 'main', -- Tracks active core branch
         build = ':TSUpdate',
     },
 
-    --      folds
+    --       folds
     {
         'kevinhwang91/nvim-ufo',
         dependencies = {
@@ -172,15 +170,12 @@ require('lazy').setup({
         },
     },
 
-    --      tags/quotation marks
+    --       tags/quotation marks
     'windwp/nvim-ts-autotag',
     "kylechui/nvim-surround",
     "m4xshen/autoclose.nvim",
 
-    --      undotree
-    'mbbill/undotree',
-
-    --      refactoring
+    --       refactoring
     {
         "ThePrimeagen/refactoring.nvim",
         dependencies = {
@@ -188,7 +183,6 @@ require('lazy').setup({
             "nvim-treesitter/nvim-treesitter",
         },
     },
-
 
     -- debugging
     {
@@ -231,9 +225,7 @@ require('lazy').setup({
             { "nvim-lua/plenary.nvim", branch = "master" },
         },
         build = "make tiktoken",
-        opts = {
-            -- See Configuration section for options
-        },
+        opts = {},
     },
 
     -- linting
@@ -245,9 +237,8 @@ require('lazy').setup({
     -- Rust
     {
         'mrcjkb/rustaceanvim',
-        version = '^7', -- Recommended
-        lazy = false, -- This plugin is already lazy
+        version = '^7',
+        lazy = false,
     },
 
 }, {})
-
