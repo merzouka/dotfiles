@@ -197,6 +197,8 @@ install_packages() {
         'alacritty' 'pass' 'zoxide'
         # For controlling i3 sleep and turn off
         'xset'
+        # For using phone as camera
+        scrcpy
     )
     
     local packages_to_install=()
