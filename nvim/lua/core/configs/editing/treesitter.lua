@@ -3,7 +3,7 @@ local ts = require('nvim-treesitter')
 ts.setup({})
 
 -- 2. Install your required language parsers
-ts.install({ 'c', 'lua', 'python', 'vimdoc', 'vim' })
+ts.install({ 'c', 'lua', 'python', 'vimdoc', 'vim', 'rust', 'bash' })
 
 -- 3. Modern replacement for 'highlight' and 'indent' keys using native autocommands
 vim.api.nvim_create_autocmd('FileType', {
