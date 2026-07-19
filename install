@@ -185,8 +185,8 @@ install_packages() {
     
     local dependencies=(
         # General dependencies
-        'git' 'gcc' 'neovim' 'npm' 'lxappearance' 'numlockx' 'maim'
-        'xclip' 'ripgrep' 'power-profiles-daemon' 'picom' 'acpi'
+        'git' 'gcc' 'npm' 'lxappearance' 'numlockx' 'maim'
+        'xclip' 'ripgrep' 'fd-find' 'tree-sitter-cli' 'power-profiles-daemon' 'picom' 'acpi'
         'wireplumber' 'alsa-utils' 'glib2' 'acpid' 'bluez' 'bluez-tools' 'brightnessctl'
         # Window manager
         'i3' 'i3status' 'i3lock' 'xbacklight' 'feh' 'i3blocks' 'xorg-x11-server-Xorg'
@@ -321,9 +321,42 @@ install_additional_software() {
     fi
 }
 
+# Install Neovim from latest nightly tarball
+install_neovim() {
+    if prompt_user "Install Neovim (latest nightly via tarball)"; then
+        log_info "Downloading Neovim..."
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
+            || handle_error "Failed to download Neovim"
+        sudo rm -rf /opt/nvim-linux-x86_64
+        sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz \
+            || handle_error "Failed to extract Neovim"
+        rm nvim-linux-x86_64.tar.gz
+        log_success "Neovim installed to /opt/nvim-linux-x86_64"
+    fi
+}
+
+# Install Go from latest stable tarball
+install_go() {
+    if prompt_user "Install Go (latest stable via tarball)"; then
+        log_info "Downloading Go..."
+        local go_tarball
+        go_tarball=$(curl -sL https://go.dev/dl/ | grep -oP 'go[0-9]+\.[0-9]+(\.[0-9]+)?\.linux-amd64\.tar\.gz' | head -1)
+        if [[ -z "$go_tarball" ]]; then
+            log_error "Failed to determine latest Go version"
+            log_info "Install Go manually: download the latest tarball from https://go.dev/dl/ and extract to /usr/local/go"
+            return 1
+        fi
+        curl -LO "https://go.dev/dl/$go_tarball" || handle_error "Failed to download Go"
+        sudo rm -rf /usr/local/go
+        sudo tar -C /usr/local -xzf "$go_tarball" || handle_error "Failed to extract Go"
+        rm "$go_tarball"
+        log_success "Go installed to /usr/local/go ($(go version 2>/dev/null || echo 'version unknown'))"
+    fi
+}
+
 # Install Flatpak applications
 install_flatpak_apps() {
-    if prompt_user "Install Flatpak applications (Motrix, OBS Studio, Zen Browser)"; then
+    if prompt_user "Install Flatpak applications (Motrix, OBS Studio, Floorp, Chrome, Discord, Zed)"; then
         log_info "Setting up Flatpak..."
 
         # Ensure Flatpak is installed
@@ -342,9 +375,10 @@ install_flatpak_apps() {
         local flatpak_apps=(
             "net.agalwood.Motrix"     # Download manager
             "com.obsproject.Studio"   # Screen recording & streaming
-            "com.vivaldi.Vivaldi"     # Vivaldi Browser
+            "one.ablaze.floorp"       # Floorp Browser
             "com.google.Chrome"       # Chrome Browser
             "com.discordapp.Discord"  # Discord
+            "dev.zed.Zed"             # Zed Editor
         )
 
         for app_id in "${flatpak_apps[@]}"; do
@@ -362,8 +396,7 @@ install_flatpak_apps() {
             fi
         done
 
-        # Vivaldi logout fix
-        flatpak override --user com.vivaldi.Vivaldi --env=VIVALDI_USER_FLAGS="--password-store=basic"
+
     fi
 }
 
@@ -439,12 +472,6 @@ apply_configurations() {
         fi
     fi
     
-    # Install Neovim dependencies
-    if [[ -f "$HOME/.config/nvim/install" ]]; then
-        log_info "Installing Neovim dependencies..."
-        "$HOME/.config/nvim/install" || handle_error "Failed to install Neovim dependencies"
-        log_success "Neovim dependencies installed"
-    fi
     
     # Copy wallpapers
     if prompt_user "Copy wallpapers"; then
@@ -625,6 +652,8 @@ main() {
     install_dlink_ax300_driver
 
     install_packages
+    install_neovim
+    install_go
     install_additional_software
     install_flatpak_apps
     copy_configurations
