@@ -3,15 +3,14 @@ local ts = require('nvim-treesitter')
 ts.setup({})
 
 -- 2. Install your required language parsers
-ts.install({ 'c', 'lua', 'python', 'vimdoc', 'vim', 'rust', 'bash' })
+ts.install({ 'c', 'lua', 'python', 'vimdoc', 'vim', 'rust', 'bash', 'yaml' })
 
--- 3. Modern replacement for 'highlight' and 'indent' keys using native autocommands
 vim.api.nvim_create_autocmd('FileType', {
     callback = function()
-        -- Uses Neovim's built-in fast treesitter syntax engine
         pcall(vim.treesitter.start)
-        -- Sets up treesitter-based smart indentation rules
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.bo.indentexpr = "v:lua.vim.treesitter.indentexpr()"
+        vim.bo.smartindent = false
+        vim.bo.autoindent = false
     end,
 })
 
