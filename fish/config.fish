@@ -44,6 +44,9 @@ fish_add_path $BUN_INSTALL/bin
 # opencode
 fish_add_path $HOME/.opencode/bin
 
+# neovim
+fish_add_path /opt/nvim-linux-x86_64/bin
+
 # environment
 set -gx EDITOR nvim
 set -gx VIMTEX_OUTPUT_DIRECTORY './out'
