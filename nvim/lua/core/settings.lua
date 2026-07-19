@@ -11,7 +11,7 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftround = true
 vim.opt.expandtab = true
-vim.opt.smartindent = true
+-- vim.opt.smartindent = true  (disabled; treesitter indentexpr handles this)
 
 
 -- line numbers: --------------------------------------------------------------
@@ -57,8 +57,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end
 })
 
--- auto indent on new line
-vim.cmd("set autoindent")
+-- auto indent on new line (disabled; treesitter indentexpr handles this)
+-- vim.cmd("set autoindent")
 
 -- folds ---------------------------------------------------------------------
 vim.cmd([[ 

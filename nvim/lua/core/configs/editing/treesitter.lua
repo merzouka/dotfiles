@@ -2,13 +2,15 @@
 local ts = require('nvim-treesitter')
 ts.setup({})
 
--- 2. Install your required language parsers
-ts.install({ 'c', 'lua', 'python', 'vimdoc', 'vim', 'rust', 'bash', 'yaml' })
+-- 2. Install your required language parsers (only if none installed yet)
+if #require('nvim-treesitter.config').get_installed() == 0 then
+    ts.install({ 'c', 'lua', 'python', 'vimdoc', 'vim', 'rust', 'bash', 'yaml' })
+end
 
 vim.api.nvim_create_autocmd('FileType', {
     callback = function()
         pcall(vim.treesitter.start)
-        vim.bo.indentexpr = "v:lua.vim.treesitter.indentexpr()"
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         vim.bo.smartindent = false
         vim.bo.autoindent = false
     end,
