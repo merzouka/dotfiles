@@ -21,6 +21,9 @@ fish_add_path $HOME/Android/Sdk/cmdline-tools/latest/bin
 # neovim (x86)
 fish_add_path /opt/nvim-linux-x86_64/bin
 
+# go binaries
+fish_add_path $HOME/go/bin
+
 # neovim (arm64 — only if present)
 if test -d '/opt/nvim-linux-arm64/bin'
     fish_add_path /opt/nvim-linux-arm64/bin
