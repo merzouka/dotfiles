@@ -96,3 +96,10 @@ if test -e $keys_file
     set -gx GOOGLE_GENERATIVE_AI_API_KEY \
         (grep -i 'GEMINI=' $keys_file | sed 's/.*GEMINI=//')
 end
+
+# pnpm
+set -gx PNPM_HOME "/home/merzouka/.local/share/pnpm"
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+  set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+# pnpm end
