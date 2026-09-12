@@ -56,14 +56,33 @@ require('lazy').setup({
 
     -- lsp stuff
     {
-        "williamboman/mason-lspconfig.nvim", -- FIX: Corrected organization name
+        "williamboman/mason.nvim",
+        opts = {
+            ensure_installed = {
+                -- LSP servers
+                "lua_ls", "bashls", "pyright", "ts_ls", "gopls", "yamlls", "rust_analyzer",
+                -- Formatters
+                "stylua",        -- Lua
+                "gofmt",         -- Go
+                "rustfmt",       -- Rust
+                "clang-format",  -- C
+                "black",         -- Python
+                "sqlfluff",      -- SQL
+                "prettier",      -- HTML, JS, TS, JSX, TSX
+                "shfmt",         -- Bash/sh
+                "dockerfmt",     -- Dockerfile
+            },
+        },
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
         opts = {
             automatic_enable = {
                 exclude = { "rust_analyzer" }
             },
         },
         dependencies = {
-            { "williamboman/mason.nvim", opts = {} }, -- FIX: Corrected organization name
+            "williamboman/mason.nvim",
             "neovim/nvim-lspconfig",
         },
     },
@@ -144,13 +163,12 @@ require('lazy').setup({
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
         event = "BufReadPost",
         opts = {
             enable = true,
-            max_lines = 3,          -- how many context lines to show (0 = no limit)
+            max_lines = 3,
             min_window_height = 0,
-            mode = "cursor",        -- or "topline"
+            mode = "cursor",
             multiline_threshold = 20,
             trim_scope = "outer",
             zindex = 20,
@@ -232,7 +250,11 @@ require('lazy').setup({
     'mfussenegger/nvim-lint',
 
     -- formatting
-    'mhartington/formatter.nvim',
+    {
+        'stevearc/conform.nvim',
+        event = "BufWritePre",
+        opts = {},
+    },
 
     -- Rust
     {

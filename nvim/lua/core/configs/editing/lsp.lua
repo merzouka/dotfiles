@@ -22,11 +22,6 @@ nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end, '[W]orkspace [L]ist Folders')
 
--- create a command ':LspFormat' for local lsp formatting
-vim.api.nvim_buf_create_user_command(0, 'Format', function(_)
-    vim.lsp.buf.format()
-end, { desc = 'Format current buffer with LSP' })
-
 require('mason-lspconfig').setup({
     ensure_installed = {
         "lua_ls", "bashls", "pyright", "ts_ls", "gopls", "yamlls", "rust_analyzer"
