@@ -197,9 +197,7 @@ install_packages() {
         'alacritty' 'pass' 'zoxide'
         # For controlling i3 sleep and turn off
         'xset'
-        # For using phone as camera
-        scrcpy
-    )
+        )
     
     local packages_to_install=()
     
@@ -366,11 +364,17 @@ install_flatpak_apps() {
             log_success "Flatpak installed"
         fi
 
-        # Add Flathub remote (default, use --if-not-exists to be safe)
+        # Add Flathub remote
         log_info "Adding Flathub remote..."
-        flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
+        sudo flatpak remote-add --if-not-exists --system flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
             || handle_error "Failed to add Flathub remote"
         log_success "Flathub remote configured"
+
+        # Remove conflicting dnf-installed VSCode (now bundled via flatpak)
+        if is_package_installed "code"; then
+            log_info "Removing dnf-installed VSCode to avoid conflicts..."
+            sudo dnf remove -y code || log_warning "Failed to remove dnf-installed VSCode"
+        fi
 
         local flatpak_apps=(
             "net.agalwood.Motrix"     # Download manager
@@ -379,16 +383,18 @@ install_flatpak_apps() {
             "com.google.Chrome"       # Chrome Browser
             "com.discordapp.Discord"  # Discord
             "dev.zed.Zed"             # Zed Editor
+            "com.visualstudio.code" # Visual Studio Code
+            "com.github.johnfactotum.Foliate" # Foliate book reader
         )
 
         for app_id in "${flatpak_apps[@]}"; do
             local app_name
             app_name=$(echo "$app_id" | awk -F'.' '{print $NF}')
             log_info "Installing $app_name ($app_id)..."
-            if flatpak info --user "$app_id" &>/dev/null; then
+            if sudo flatpak info --system "$app_id" &>/dev/null; then
                 log_success "$app_name is already installed"
             else
-                if flatpak install --user --noninteractive flathub "$app_id"; then
+                if sudo flatpak install --system -y flathub "$app_id"; then
                     log_success "$app_name installed successfully"
                 else
                     log_warning "Failed to install $app_name ($app_id) - skipping"
@@ -512,23 +518,6 @@ setup_repositories() {
 
 # Install optional applications
 install_optional_apps() {
-    # VSCode
-    if prompt_user "Install Visual Studio Code"; then
-        log_info "Installing VSCode..."
-        
-        # Import Microsoft GPG key
-        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc || handle_error "Failed to import Microsoft GPG key"
-        
-        # Add VSCode repository
-        sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo' || handle_error "Failed to add VSCode repository"
-        
-        # Update package cache and install
-        sudo dnf check-update
-        sudo dnf install -y code || handle_error "Failed to install VSCode"
-        
-        log_success "VSCode installed"
-    fi
-    
     # VLC
     if prompt_user "Install VLC Media Player"; then
         log_info "Installing VLC..."
