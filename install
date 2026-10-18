@@ -194,7 +194,8 @@ install_packages() {
         'fish'
         # Utilities
         'pavucontrol' 'blueman' 'xorg-x11-server-utils' 'arandr' 'rofi' 'tmux'
-        'alacritty' 'pass' 'zoxide'
+        'pass' 'zoxide'
+        # 'alacritty' 
         # For controlling i3 sleep and turn off
         'xset'
         )
@@ -240,6 +241,19 @@ install_packages() {
 
 # Install additional software
 install_additional_software() {
+    # Install Ghostty terminal emulator
+    if prompt_user "Install Ghostty terminal"; then
+        log_info "Installing Ghostty..."
+        if ! command_exists ghostty; then
+            sudo dnf copr enable -y scottames/ghostty || \
+                handle_error "Failed to enable Ghostty COPR"
+            sudo dnf install -y ghostty || \
+                handle_error "Failed to install Ghostty"
+            log_success "Ghostty installed"
+        else
+            log_success "Ghostty already installed"
+        fi
+    fi
     # Install Tmux Package Manager
     if prompt_user "Install Tmux Package Manager"; then
         log_info "Installing TPM..."
