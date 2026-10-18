@@ -452,6 +452,37 @@ copy_configurations() {
     fi
 }
 
+# Configure HiDPI zoom for i3
+configure_i3_zoom() {
+    if prompt_user "Add zoom to i3 (for high-resolution laptop screens)"; then
+        log_info "Configuring i3 zoom..."
+
+        local src="$DOTFILES_PATH/i3/.Xresources"
+        local dest="$HOME/.Xresources"
+
+        if [[ ! -f "$src" ]]; then
+            log_warning "$src not found - skipping i3 zoom"
+            return 0
+        fi
+
+        # Back up an existing, different ~/.Xresources
+        if [[ -f "$dest" ]] && ! cmp -s "$src" "$dest"; then
+            cp "$dest" "$dest.bak" || handle_error "Failed to back up $dest"
+            log_warning "Existing $dest backed up to $dest.bak"
+        fi
+
+        cp "$src" "$dest" || handle_error "Failed to copy .Xresources to $HOME"
+        log_success "Copied .Xresources to $HOME"
+
+        # Apply immediately if running inside an X session
+        if command_exists xrdb && [[ -n "$DISPLAY" ]]; then
+            xrdb -merge "$dest" || log_warning "Failed to merge .Xresources with xrdb"
+        fi
+
+        log_info "Restart i3 (Mod+Shift+r) or log out/in for the zoom to fully apply."
+    fi
+}
+
 # Configure shell
 configure_shell() {
     if prompt_user "Set Fish as default shell"; then
@@ -662,6 +693,7 @@ main() {
     install_additional_software
     install_flatpak_apps
     copy_configurations
+    configure_i3_zoom
     configure_shell
     apply_configurations
     enable_services
