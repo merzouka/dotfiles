@@ -60,6 +60,7 @@ alias vim=nvim
 alias tf=terraform
 alias k=kubectl
 alias d=docker
+alias p=podman
 alias cd=z
 
 function kcd
@@ -103,6 +104,9 @@ if not string match -q -- "$PNPM_HOME/bin" $PATH
   set -gx PATH "$PNPM_HOME/bin" $PATH
 end
 # pnpm end
+
+# Greycat
+set -gx PATH "/home/merzouka/.greycat/bin" $PATH
 
 # Set DPI
 xrdb -merge ~/.Xresources

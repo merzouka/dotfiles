@@ -331,6 +331,26 @@ install_additional_software() {
             log_success "Kubectl already installed"
         fi
     fi
+
+    if prompt_user "Install Kubeseal (used for SealedSecrets by Bitnami)"; then
+        log_info "Installing Kubectl..."
+        if ! command_exists kubectl; then
+            KUBESEAL_VERSION=$(curl -s https://api.github.com/repos/bitnami/sealed-secrets/tags | jq -r '.[0].name' | cut -c 2-)
+
+            if [ -z "$KUBESEAL_VERSION" ]; then
+                echo "Failed to fetch the latest KUBESEAL_VERSION"
+                exit 1
+            fi
+
+            curl -OL "https://github.com/bitnami/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz"
+            tar -xvzf kubeseal-${KUBESEAL_VERSION}-linux-amd64.tar.gz kubeseal
+            sudo install -m 755 kubeseal /usr/local/bin/kubeseal || \
+                handle_error "Failed to install Kubectl"
+            log_success "Kubeseal installed"
+        else
+            log_success "Kubeseal already installed"
+        fi
+    fi
 }
 
 # Install Neovim from latest nightly tarball
