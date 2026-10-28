@@ -59,6 +59,7 @@ set -gx TMUXIFIER_LAYOUT_PATH "$HOME/.config/tmux/layouts/"
 alias vim=nvim
 alias tf=terraform
 alias k=kubectl
+alias kseal=kubeseal
 alias d=docker
 alias p=podman
 alias cd=z
