@@ -111,3 +111,6 @@ set -gx PATH "/home/merzouka/.greycat/bin" $PATH
 
 # Set DPI
 xrdb -merge ~/.Xresources
+
+# Set binding for deleting
+bind alt-backspace backward-kill-path-component
